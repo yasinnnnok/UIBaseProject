@@ -1,13 +1,12 @@
 ﻿@using Entities.Concrete
 @model List<OperationClaim>
 
-@{
-    Layout = null;
-}
+
 <h1>OPERATİON CLAİMS LİSTESİ</h1>
 <br />
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<a class="btn btn-primary"  asp-controller="OperationClaims" asp-action="Add">Operation Claim Ekle</a>
 
 @foreach (var item in Model)
 {
