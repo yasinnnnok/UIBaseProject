@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+<h1>OPERATİON CLAİM EKLEME SAYFASI</h1>
+<br />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<div class="row mt-4">
+    <div class="col-md-4 offset-4">
+        <form action="/OperationClaims/Add" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="exampleInputEmail1">ID </label>
+                <input type="email" name="id" class="form-control">
+            </div>
+           
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Operasyon Adı </label>
+                <input type="text" name="name" class="form-control">
+            </div>
+
+            <hr />
+            <button type="submit" class="btn btn-primary">KAYDET</button>
+            <h2 class="text-danger">@TempData["Hata"]</h2>
+        </form>
+    </div>
+</div>
+

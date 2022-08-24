@@ -1,7 +1,16 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Business.DependencyResolves.Autofac;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//Autofac ile DependencyInjection ekleme
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder=>builder.RegisterModule(new AutofacBusinessModule()));
+
+
 
 var app = builder.Build();
 

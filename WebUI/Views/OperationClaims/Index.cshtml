@@ -1,0 +1,31 @@
+﻿@using Entities.Concrete
+@model List<OperationClaim>
+
+@{
+    Layout = null;
+}
+<h1>OPERATİON CLAİMS LİSTESİ</h1>
+<br />
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+@foreach (var item in Model)
+{
+    <div class="col-md-3">
+        <table class="table">
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>
+                    <a href="/OperationClaims/Delete/@item.Id">Sil</a>
+                </td>
+
+                <td>
+                    <a href="/OperationClaims/Update/@item.Id">Düzenle</a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+}
