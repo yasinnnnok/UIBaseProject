@@ -1,4 +1,6 @@
-﻿
+﻿@using Entities.Concrete
+@model OperationClaim
+
 <h1>OPERATİON CLAİM EKLEME SAYFASI</h1>
 <br />
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -6,18 +8,34 @@
 <div class="row mt-4">
     <div class="col-md-4 offset-4">
         <form action="/OperationClaims/Add" method="post" enctype="multipart/form-data">
-        
-           
 
-            <div class="form-group">
+
+
+            <div class="form-group pb-2 ">
                 <label for="exampleInputEmail1">Operasyon Adı </label>
                 <input type="text" name="name" class="form-control">
             </div>
 
-           
+
             <button type="submit" class="btn btn-primary">KAYDET</button>
             <h2 class="text-danger">@TempData["Hata"]</h2>
         </form>
     </div>
 </div>
 
+@*<form asp-action="Add" asp-controller="OperationClaims" method="post" class="login100-form validate-form">
+    <div class="col-md-4 offset-4">
+        <div>
+            <span class="label-input100">Operation Claims</span>
+            <input class="input100" type="text" asp-for="Name">
+            <span class="focus-input100"></span>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">
+            Kaydet
+        </button>
+        </div>
+    </div>
+ 
+        
+</form>*@

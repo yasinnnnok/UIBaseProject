@@ -1,0 +1,50 @@
+﻿@using Entities.Concrete
+@model List<User>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+
+
+
+
+<!-- Table head options start operation claims -->
+<div class="row" id="table-head">
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Kullanıcılar Listesi</h4>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>İsim</th>
+                        <th>Email Adresi</th>
+                        <th>
+                            <a class="btn btn-primary" asp-controller="User" asp-action="Add"><i class="fa-solid fa-plus"></i></a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+
+                            <td>
+                                <a href="/User/Update/@item.Id" class="btn btn-warning">Düzenle</a>
+                                <a href="/User/Delete/@item.Id" class="btn btn-danger">Sil</a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</div>
+<!-- Table head options end -->

@@ -1,0 +1,51 @@
+﻿@using Entities.Concrete
+@model List<UserOperationClaim>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+
+
+
+
+
+
+
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">User Operation Claims Listesi</h4>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Kullanıcı</th>
+                        <th>Operasyon</th>
+                          <th>
+                            <a class="btn btn-primary" asp-controller="UserOperationClaim" asp-action="Add"><i class="fa-solid fa-plus"></i></a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.UserId</td>
+                            <td>@item.OperationClaimId</td>
+                            <td>
+                                <a href="/UserOperationClaim/Update/@item.Id" class="btn btn-warning">Düzenle</a>
+                                <a href="/UserOperationClaim/Delete/@item.Id" class="btn btn-danger">Sil</a>
+                            </td>
+
+
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+

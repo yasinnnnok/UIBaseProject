@@ -1,0 +1,31 @@
+﻿@using Entities.Concrete
+@model User
+
+<h1>KULLANICI EKLEME SAYFASI</h1>
+<br />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+
+<div class="row mt-4">
+    <div class="col-md-4 offset-4">
+        <form asp-action="Add" asp-controller="User" method="post" class="login100-form validate-form">
+
+            <div>
+                <span class="label-input100">Kullanıcı Adı</span>
+                <input class="input100" type="text" asp-for="Name">
+                <span class="focus-input100"></span>
+            </div>
+                   <div>
+                <span class="label-input100">Email</span>
+                <input class="input100" type="text" asp-for="Email">
+                <span class="focus-input100"></span>
+            </div>
+         
+                <button type="submit" class="btn btn-primary">
+                    KAYDET
+                </button>
+
+        </form>
+    </div>
+</div>

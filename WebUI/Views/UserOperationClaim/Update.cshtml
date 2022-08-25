@@ -1,0 +1,30 @@
+﻿@using Entities.Concrete
+@model UserOperationClaim
+
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+
+<div class="row mt-4">
+    <div class="col-md-4 offset-4">
+        @using (Html.BeginForm("Update", "UserOperationClaim", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.Id)
+            <br />
+            @Html.Label("Kullanıcı")
+            @Html.TextBoxFor(x => x.UserId, new { @class = "form-control" })
+            <span>@Html.ValidationMessageFor(x => x.UserId)</span>
+            @Html.Label("Operaasyon")
+            @Html.TextBoxFor(x => x.OperationClaimId, new { @class = "form-control" })
+            <span>@Html.ValidationMessageFor(x => x.OperationClaimId)</span>
+            <br />
+            <hr />
+            <button class="btn btn-primary">GÜNCELLE</button>
+            <h2 class="text-danger">@TempData["Hata"]</h2>
+        }
+    </div>
+</div>
+
+
+
