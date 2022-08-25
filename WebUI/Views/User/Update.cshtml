@@ -1,0 +1,51 @@
+﻿@using Entities.Concrete
+@model User
+
+
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<!-- Table head options start operation claims -->
+<div class="row" id="table-head">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Kullanıcı Ekleme</h4>
+            </div>
+            <form asp-action="Update" asp-controller="User" method="post" class="login100-form validate-form">
+                <div class="table-responsive">
+                    <table class="table">
+
+                        <tbody>
+                            <tr>
+                                <td>Kullanıcı Adı</td>
+                                <td> <input class="input100" type="text" asp-for="Name"></td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td><input class="input100" type="text" asp-for="Email"></td>
+                            </tr>
+                            <tr>
+                                <td>Image Url</td>
+                                <td><input class="input100" type="text" asp-for="ImageUrl"></td>
+                            </tr>
+                      
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary">KAYDET </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- Table head options end -->
+
+
+

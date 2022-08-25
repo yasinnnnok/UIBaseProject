@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -25,9 +26,9 @@ namespace WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Add(User user)
+        public IActionResult Add(AuthDto authDto)
         {
-            _userService.Add(user);
+            _userService.Add(authDto);
             return RedirectToAction("Index", "User");
         }
 

@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Hashing;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +22,19 @@ namespace Business.Concrete
         }
 
 
-        public void Add(User user)
+        public void Add(AuthDto authDto)
         {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePassword(authDto.Password,out passwordHash,out passwordSalt);
+
+            User user = new User();
+            user.Id = 0;
+            user.Email = authDto.Email;
+            user.Name = authDto.Name;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.ImageUrl=authDto.ImageUrl;
+
             _userDal.Add(user);
         }
 
@@ -32,7 +45,7 @@ namespace Business.Concrete
 
         public User GetById(int id)
         {
-            var result = _userDal.Get(p=>p.Id ==id);
+            var result = _userDal.Get(p => p.Id == id);
             return result;
         }
 

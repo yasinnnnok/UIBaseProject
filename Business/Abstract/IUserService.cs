@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Business.Abstract
 {
     public  interface IUserService
     {
-        void Add(User user);
+        void Add(AuthDto authDto);
         void Delete(User user);
         void Update(User user);
 
