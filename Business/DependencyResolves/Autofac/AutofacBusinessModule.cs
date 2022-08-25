@@ -11,16 +11,19 @@ using System.Threading.Tasks;
 
 namespace Business.DependencyResolves.Autofac
 {
-    public  class AutofacBusinessModule:Module
+    public class AutofacBusinessModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-         //İlk önce MANAGER as SERVİCE yaz. (Servisi yazdığımda manager'ı hatırla dedik.)
-         builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>();
-         builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
-           
+            //İlk önce MANAGER as SERVİCE yaz. (Servisi yazdığımda manager'ı hatırla dedik.)
+            builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>();
+            builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
 
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
 
+            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
+            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationDal>();
         }
 
 

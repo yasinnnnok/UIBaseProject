@@ -7,26 +7,20 @@ namespace WebUI.Controllers
     public class OperationClaimsController : Controller
     {
         private readonly IOperationClaimService _operationClaimService;
-
         public OperationClaimsController(IOperationClaimService operationClaimService)
         {
             _operationClaimService = operationClaimService;
         }
-
         public IActionResult Index()
         {
             var values = _operationClaimService.GetList();
             return View(values);
-
         }
-
         [HttpGet]
         public IActionResult Add()
         {            
             return View();
         }
-
-
 
         [HttpPost]
         public IActionResult Add(OperationClaim operationClaim)
