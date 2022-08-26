@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Dtos
 {
+    //USerOperationClaimManager da kullanmak için. farklı tablodaki alanları listelemek için kullanılacak.
     public  class UserDto
     {
         public int Id { get; set; }

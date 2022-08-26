@@ -1,5 +1,5 @@
-﻿@using Entities.Concrete
-@model User
+﻿@using Entities.Dtos
+@model LoginAuthDto
 
 @{
     Layout = null;
@@ -54,7 +54,7 @@
 
 					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" asp-for="PasswordHash" placeholder="Enter password">
+						<input class="input100" type="password" asp-for="Password" placeholder="Enter password">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -62,22 +62,24 @@
 						<div class="contact100-form-checkbox">
 							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
 							<label class="label-checkbox100" for="ckb1">
-								Remember me
+								Hatırla
 							</label>
 						</div>
 
 						<div>
 							<a href="#" class="txt1">
-								Forgot Password?
+								Şifremi Unuttum
 							</a>
 						</div>
 					</div>
 
 					<div class="container-login100-form-btn">
 						<button type="submit" class="login100-form-btn">
-							Login
+							GİRİŞ YAP
 						</button>
+						
 					</div>
+					@TempData["LoginHata"]
 				</form>
 			</div>
 		</div>

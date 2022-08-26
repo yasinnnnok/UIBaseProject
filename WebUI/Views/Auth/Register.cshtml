@@ -5,42 +5,6 @@
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 
-
-@*
-<div class="row mt-4">
-    <div class="col-md-4 offset-4">
-        <form asp-action="Add" asp-controller="User" method="post" class="login100-form validate-form">
-
-            <div>
-                <span class="label-input100">Kullanıcı Ad Soyad</span>
-                <input class="input100" type="text" asp-for="Name">
-                <span class="focus-input100"></span>
-            </div>
-            <div>
-                <span class="label-input100">Email Adresi</span>
-                <input class="input100" type="text" asp-for="Email">
-                <span class="focus-input100"></span>
-            </div>
-            <div>
-                <span class="label-input100">Image Url</span>
-                <input class="input100" type="text" asp-for="ImageUrl">
-                <span class="focus-input100"></span>
-            </div>
-            <div>
-                <span class="label-input100">Şifre</span>
-                <input class="input100" type="text" asp-for="Password">
-                <span class="focus-input100"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary">
-                KAYDET
-            </button>
-
-        </form>
-    </div>
-</div>*@
-
-
 <!-- Table head options start operation claims -->
 <div class="row" id="table-head">
     <div class="col-6">
@@ -48,7 +12,7 @@
             <div class="card-header">
                 <h4 class="card-title">Kullanıcı Ekleme</h4>
             </div>
-            <form asp-action="Add" asp-controller="User" method="post" class="login100-form validate-form">
+            <form asp-action="Register" asp-controller="Auth" method="post" class="login100-form validate-form">
                 <div class="table-responsive">
                     <table class="table">
 

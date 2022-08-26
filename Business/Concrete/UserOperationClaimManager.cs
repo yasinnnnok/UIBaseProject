@@ -45,12 +45,13 @@ namespace Business.Concrete
         {
 
             var userOperationAll = _userOperationDal.GetAll();
-            var userDto = new UserDto();
+            
             List<UserDto> result = new List<UserDto>();
             foreach (var item in userOperationAll)
             {
                 var user = _userDal.Get(x => x.Id == item.UserId);
                 var opertaion = _operationClaimDal.Get(x => x.Id == item.OperationClaimId);
+                var userDto = new UserDto();
 
                 userDto.Id = item.Id;
                 userDto.UserId = item.Id;

@@ -1,1 +1,8 @@
 1) USerOperation sayfasýnda kayýtlar sayý olarak doðru geliyor fakar son ismi yazdýrýyor hep.
+
+
+
+
+
+KODLAR
+ <a class="btn btn-primary" asp-controller="User" asp-action="Add"><i class="fa-solid fa-plus"></i></a>

@@ -43,6 +43,13 @@ namespace Business.Concrete
             _userDal.Delete(user);
         }
 
+  
+        public User GetByEmail(string email)
+        {
+            var result = _userDal.Get(p => p.Email == email);
+            return result;
+        }
+
         public User GetById(int id)
         {
             var result = _userDal.Get(p => p.Id == id);

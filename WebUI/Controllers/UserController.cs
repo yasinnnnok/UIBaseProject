@@ -20,17 +20,8 @@ namespace WebUI.Controllers
             return View(values);
         }
 
-        [HttpGet]
-        public IActionResult Add()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Add(AuthDto authDto)
-        {
-            _userService.Add(authDto);
-            return RedirectToAction("Index", "User");
-        }
+     
+ 
 
         public IActionResult Delete(int id)
         {
