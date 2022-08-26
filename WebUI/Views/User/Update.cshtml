@@ -36,7 +36,8 @@
                                     <button type="submit" class="btn btn-primary">KAYDET </button>
                                 </td>
                             </tr>
-
+                            @Html.HiddenFor(x => x.PasswordHash)
+                            @Html.HiddenFor(x => x.PasswordSalt)
                         </tbody>
                     </table>
                 </div>
@@ -46,6 +47,7 @@
     </div>
 </div>
 <!-- Table head options end -->
+
 
 
 
