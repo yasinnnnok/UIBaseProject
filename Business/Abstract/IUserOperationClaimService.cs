@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Business.Abstract
         void Update(UserOperationClaim userOperationClaim);
 
 
-        List<UserOperationClaim> GetList();
+        List<UserDto> GetList();
         UserOperationClaim GetById(int id);
     }
 }

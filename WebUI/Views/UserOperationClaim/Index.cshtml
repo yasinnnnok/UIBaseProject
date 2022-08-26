@@ -1,5 +1,6 @@
-﻿@using Entities.Concrete
-@model List<UserOperationClaim>
+﻿
+@using Entities.Dtos
+@model List<UserDto>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
@@ -30,15 +31,12 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.UserId</td>
-                            <td>@item.OperationClaimId</td>
+                            <td>@item.KullaniciAdi</td>
+                            <td>@item.OperasyonAdi</td>
                             <td>
                                 <a href="/UserOperationClaim/Update/@item.Id" class="btn btn-warning">Düzenle</a>
                                 <a href="/UserOperationClaim/Delete/@item.Id" class="btn btn-danger">Sil</a>
                             </td>
-
-
-
 
                         </tr>
                     }
