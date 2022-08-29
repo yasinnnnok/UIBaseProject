@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Hashing;
+using Core.Utilities.Result.Concrete;
 using Entities.Dtos;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +38,51 @@ namespace Business.Concrete
 
         }
 
-        public void Register(AuthDto authDto)
+        //succcess : true  false
+        //message  string
+        public Result Register(AuthDto authDto)
         {
-            _userService.Add(authDto);
+            AuthValidator validationRules = new AuthValidator();
+            ValidationResult validationResult = validationRules.Validate(authDto);
+
+            Result result = new Result();
+            if (validationResult.IsValid)
+            {
+                bool isExist = CheckIfEmailExists(authDto.Email);
+                if (isExist)
+                {
+                    _userService.Add(authDto);
+                    result.Success = true;
+                    result.Message = "Kullanıcı kaydı başarı ile tamamlandı.";
+                    return result;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "Bu mail adresi daha önce kullanılmış.";
+                    
+                }
+            }
+
+            result.Success = false;
+            
+
+            return result;
+
         }
+
+        bool CheckIfEmailExists(string email)
+        {
+            var list = _userService.GetByEmail(email);
+            if (list!=null)
+            {
+                return false;
+            }
+            //yoksa true
+            return true;
+        }
+
+
+
     }
 }

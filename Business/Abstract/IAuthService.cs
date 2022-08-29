@@ -1,4 +1,5 @@
-﻿using Entities.Dtos;
+﻿using Core.Utilities.Result.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Business.Abstract
 {
     public interface IAuthService
     {
-        void Register(AuthDto authDto);
+        Result Register(AuthDto authDto);
         bool Login(LoginAuthDto loginAuthDto);
 
     }

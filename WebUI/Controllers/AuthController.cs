@@ -24,20 +24,15 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Register(AuthDto authDto)
         {
-            AuthValidator validationRules = new AuthValidator();
-            ValidationResult validationResult = validationRules.Validate(authDto);
 
-            if (validationResult.IsValid)
+            var result= _authService.Register(authDto);
+            if (result.Success)
             {
-                _authService.Register(authDto);
                 return RedirectToAction("Index", "User");
             }
 
-
+            TempData["Hata"] = result.Message;
             return View(authDto);
-         
-          
-
         }
 
 
