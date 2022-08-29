@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
 using Entities.Dtos;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -22,8 +24,20 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Register(AuthDto authDto)
         {
-            _authService.Register(authDto);
-            return RedirectToAction("Index","User");                 
+            UserValidator validationRules = new UserValidator();
+            ValidationResult validationResult = validationRules.Validate(authDto);
+
+            if (validationResult.IsValid)
+            {
+                _authService.Register(authDto);
+                return RedirectToAction("Index", "User");
+            }
+
+
+            return View(authDto);
+         
+          
+
         }
 
 
@@ -40,9 +54,9 @@ namespace WebUI.Controllers
             {
                 return RedirectToAction("Register", "Auth");
             }
-            TempData["LoginHata"]= "Hatalı Giriş";
+            TempData["LoginHata"] = "Hatalı Giriş";
             return View();
-          
+
         }
     }
 }

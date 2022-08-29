@@ -1,16 +1,24 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolves.Autofac;
+using Business.ValidationRules.FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation(configration => configration.RegisterValidatorsFromAssemblyContaining<UserValidator>());
+   
 //Autofac ile DependencyInjection ekleme
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder=>builder.RegisterModule(new AutofacBusinessModule()));
 
-
+//****YABANCI siteden
+//builder.Services.AddFluentValidation(c=>c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+//builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
 
 var app = builder.Build();
 
