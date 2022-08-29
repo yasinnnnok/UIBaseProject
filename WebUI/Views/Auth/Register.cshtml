@@ -5,12 +5,11 @@
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 <div asp-validation-summary="All">
-
 </div>
 
 
 <!-- Table head options start operation claims -->
-<div class="row" id="table-head">
+@*<div class="row" id="table-head">
     <div class="col-6">
         <div class="card">
             <div class="card-header">
@@ -21,27 +20,28 @@
                     <table class="table">
 
                         <tbody>
-                            
+
                             <tr>
                                 <td>Kullanıcı Adı</td>
                                 <td> <input class="input100" type="text" asp-for="Name"></td>
-                                <span asp-validation-for="Name" class="text-danger"></span> <br />
-                                                      
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <br />
+
                             </tr>
                             <tr>
                                 <td>Email</td>
                                 <td><input class="input100" type="text" asp-for="Email"></td>
-                                 <span asp-validation-for="Email" class="text-danger"></span>
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </tr>
                             <tr>
                                 <td>Image Url</td>
                                 <td><input class="input100" type="text" asp-for="ImageUrl"></td>
-                                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                <span asp-validation-for="ImageUrl" class="text-danger"></span>
                             </tr>
                             <tr>
                                 <td>Şifre</td>
                                 <td><input class="input100" type="text" asp-for="Password"></td>
-                                 <span asp-validation-for="Password" class="text-danger"></span>
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </tr>
                             <tr>
                                 <td></td>
@@ -57,5 +57,41 @@
         </div>
 
     </div>
-</div>
+</div>*@
 <!-- Table head options end -->
+
+<form asp-action="Register" asp-controller="Auth" method="post" class="login100-form validate-form">
+    <div class="col-md-4 offset-4">
+        <div>
+            <span class="label-input100">Kullanıcı</span>
+            <input class="input100" type="text" asp-for="Name">
+            <span class="focus-input100"></span>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div>
+            <span class="label-input100">Operasyon</span>
+            <input class="input100" type="text" asp-for="Email">
+            <span class="focus-input100"></span>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div>
+            <span class="label-input100">Operasyon</span>
+            <input class="input100" type="text" asp-for="ImageUrl">
+            <span class="focus-input100"></span>
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+        <div>
+            <span class="label-input100">Operasyon</span>
+            <input class="input100" type="text" asp-for="Password">
+            <span class="focus-input100"></span>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">
+                KAYDET
+            </button>
+        </div>
+    </div>
+
+
+</form>

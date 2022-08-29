@@ -13,9 +13,9 @@ namespace DataAccess.Concrete.EntityFramework.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //MSİ - EV
-            // optionsBuilder.UseSqlServer("Server=DESKTOP-4V1JSR7\\SQLEXPRESS;Database=UIBaseDb;Integrated Security=true;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-4V1JSR7\\SQLEXPRESS;Database=UIBaseDb;Integrated Security=true;");
             //MONSTER //base yapı 
-           optionsBuilder.UseSqlServer("Server=DESKTOP-BVJGQT1\\SQLEXPRESS;Database=UIBaseDb;Integrated Security=true;");
+           //optionsBuilder.UseSqlServer("Server=DESKTOP-BVJGQT1\\SQLEXPRESS;Database=UIBaseDb;Integrated Security=true;");
 
         }
 

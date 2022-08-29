@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-    .AddFluentValidation(configration => configration.RegisterValidatorsFromAssemblyContaining<UserValidator>());
+    .AddFluentValidation(configration => configration.RegisterValidatorsFromAssemblyContaining<AuthValidator>());
    
 //Autofac ile DependencyInjection ekleme
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

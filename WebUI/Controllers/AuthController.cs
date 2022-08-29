@@ -24,7 +24,7 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Register(AuthDto authDto)
         {
-            UserValidator validationRules = new UserValidator();
+            AuthValidator validationRules = new AuthValidator();
             ValidationResult validationResult = validationRules.Validate(authDto);
 
             if (validationResult.IsValid)

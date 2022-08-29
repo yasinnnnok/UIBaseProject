@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -25,8 +27,18 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Add(OperationClaim operationClaim)
         {
-            _operationClaimService.Add(operationClaim);
-            return RedirectToAction("Index", "OperationClaims");
+            OperationClaimsValidator validationRules = new OperationClaimsValidator();
+            ValidationResult result = validationRules.Validate(operationClaim);
+
+
+            if (result.IsValid)
+            {
+                _operationClaimService.Add(operationClaim);
+                return RedirectToAction("Index", "OperationClaims");
+            }
+
+
+            return View(operationClaim);
         }
 
 
@@ -45,9 +57,17 @@ namespace WebUI.Controllers
 
         [HttpPost]
         public IActionResult Update(OperationClaim operationClaim)
-        {            
-            _operationClaimService.Update(operationClaim);
-            return RedirectToAction("Index", "OperationClaims");
+        {
+            OperationClaimsValidator validationRules = new OperationClaimsValidator();
+            ValidationResult result = validationRules.Validate(operationClaim);
+
+
+            if (result.IsValid)
+            {
+                _operationClaimService.Update(operationClaim);
+                return RedirectToAction("Index", "OperationClaims");
+            }
+            return View(operationClaim);
         }
 
 

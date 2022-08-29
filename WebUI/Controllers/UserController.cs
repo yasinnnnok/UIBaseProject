@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
 using Entities.Dtos;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -40,8 +42,17 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Update(User user)
         {
-            _userService.Update(user);
-            return RedirectToAction("Index", "User");
+            UserValidator validationRules = new UserValidator();
+            ValidationResult validationResult = validationRules.Validate(user);
+
+            if (validationResult.IsValid)
+            {
+
+                _userService.Update(user);
+                return RedirectToAction("Index", "User");
+            }
+
+            return View(user);
         }
 
 

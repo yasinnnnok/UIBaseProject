@@ -20,14 +20,17 @@
                             <tr>
                                 <td>Kullanıcı Adı</td>
                                 <td> <input class="input100" type="text" asp-for="Name"></td>
+                                <span asp-validation-for="Name" class="text-danger"></span>
                             </tr>
                             <tr>
                                 <td>Email</td>
                                 <td><input class="input100" type="text" asp-for="Email"></td>
+                                  <span asp-validation-for="Email" class="text-danger"></span>
                             </tr>
                             <tr>
                                 <td>Image Url</td>
                                 <td><input class="input100" type="text" asp-for="ImageUrl"></td>
+                                  <span asp-validation-for="ImageUrl" class="text-danger"></span>
                             </tr>
                       
                             <tr>

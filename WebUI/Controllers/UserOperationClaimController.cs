@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -28,8 +30,17 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Add(UserOperationClaim userOperationClaim)
         {
-            _userOperationClaimService.Add(userOperationClaim);
-            return RedirectToAction("Index", "UserOperationClaim");
+            UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
+            ValidationResult result= validationRules.Validate(userOperationClaim);
+
+            if (result.IsValid)
+            {
+                _userOperationClaimService.Add(userOperationClaim);
+                return RedirectToAction("Index", "UserOperationClaim");
+            }
+
+            return View(userOperationClaim);
+           
         }
 
         public IActionResult Delete(int id)
@@ -49,8 +60,14 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Update(UserOperationClaim userOperationClaim)
         {
-            _userOperationClaimService.Update(userOperationClaim);
-            return RedirectToAction("Index", "UserOperationClaim");
+            UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
+            ValidationResult result = validationRules.Validate(userOperationClaim);
+            if (result.IsValid)
+            {
+                _userOperationClaimService.Update(userOperationClaim);
+                return RedirectToAction("Index", "UserOperationClaim");
+            }
+            return View(userOperationClaim);
         }
 
 
