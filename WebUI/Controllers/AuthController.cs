@@ -51,7 +51,6 @@ namespace WebUI.Controllers
             }
             TempData["LoginHata"] = "Hatalı Giriş";
             return View();
-
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Result.Concrete;
+﻿using Core.Utilities.Result.Abstract;
+using Core.Utilities.Result.Concrete;
 using Entities.Dtos;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Business.Abstract
 {
     public interface IAuthService
     {
-        Result Register(AuthDto authDto);
+        IResult Register(AuthDto authDto);
         bool Login(LoginAuthDto loginAuthDto);
 
     }
