@@ -55,6 +55,28 @@ namespace WebUI.Controllers
             return View(user);
         }
 
+        [HttpGet]
+        public IActionResult ChangePassword(int id)
+        {
+            var result = _userService.GetById(id);
+            UserChangePasswordDto changePasswordDto = new UserChangePasswordDto();
+            changePasswordDto.UserId = result.Id;
+            return View(changePasswordDto);
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(UserChangePasswordDto userChangePasswordDto)
+        {
+            var result= _userService.ChangePassword(userChangePasswordDto);
+            if (result.Success)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            TempData["Hata"] = result.Message;
+            return View();
+        }
+
 
     }
 }

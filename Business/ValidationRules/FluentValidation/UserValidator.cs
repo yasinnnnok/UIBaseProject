@@ -16,6 +16,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(p => p.Email).NotEmpty().WithMessage("Email boş geçilemez.");
             RuleFor(p => p.Email).EmailAddress().WithMessage("Emailinizi formata uygun giriniz.");
             RuleFor(p => p.ImageUrl).NotEmpty().WithMessage("Image URl  boş geçilemez.");
+
         }
     }
 }

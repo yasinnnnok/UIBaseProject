@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Result.Abstract;
+using Entities.Concrete;
 using Entities.Dtos;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,13 @@ namespace Business.Abstract
         void Add(AuthDto authDto);
         void Delete(User user);
         void Update(User user);
+        IResult ChangePassword(UserChangePasswordDto userChangePasswordDto);
 
         User GetByEmail(string Email);
 
         List<User> GetList();
         User GetById(int id);
+     
 
 
     }

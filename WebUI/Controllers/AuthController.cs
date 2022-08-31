@@ -28,7 +28,7 @@ namespace WebUI.Controllers
             var result= _authService.Register(authDto);
             if (result.Success)
             {
-                return RedirectToAction("Index", "User");
+                return RedirectToAction("Index", "Home");
             }
 
             TempData["Hata"] = result.Message;
@@ -47,7 +47,7 @@ namespace WebUI.Controllers
             var result = _authService.Login(loginAuthDto);
             if (result)
             {
-                return RedirectToAction("Register", "Auth");
+                return RedirectToAction("Index", "Home");
             }
             TempData["LoginHata"] = "Hatalı Giriş";
             return View();

@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Hashing;
+using Core.Utilities.Result.Abstract;
+using Core.Utilities.Result.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -25,7 +27,7 @@ namespace Business.Concrete
         public void Add(AuthDto authDto)
         {
             byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePassword(authDto.Password,out passwordHash,out passwordSalt);
+            HashingHelper.CreatePassword(authDto.Password, out passwordHash, out passwordSalt);
 
             User user = new User();
             user.Id = 0;
@@ -33,9 +35,28 @@ namespace Business.Concrete
             user.Name = authDto.Name;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            user.ImageUrl=authDto.ImageUrl;
+            user.ImageUrl = authDto.ImageUrl;
 
             _userDal.Add(user);
+        }
+
+        public IResult ChangePassword(UserChangePasswordDto userChangePasswordDto)
+        {
+            var user = _userDal.Get(p => p.Id == userChangePasswordDto.UserId);
+            bool result = HashingHelper.VerifyPasswordHash(userChangePasswordDto.CurrentPassword, user.PasswordHash, user.PasswordSalt);
+            if (!result)
+            {
+                return new ErrorResult("Mevcut şifrenizi yanlış girdiniz.");
+            }
+
+
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePassword(userChangePasswordDto.NewPassword,out passwordHash,out passwordSalt);
+
+            user.PasswordHash=passwordHash;
+            user.PasswordSalt=passwordSalt;
+            _userDal.Update(user);
+            return new SuccessResult("Şifreniz başarı ile güncellendi.");
         }
 
         public void Delete(User user)
@@ -43,7 +64,7 @@ namespace Business.Concrete
             _userDal.Delete(user);
         }
 
-  
+
         public User GetByEmail(string email)
         {
             var result = _userDal.Get(p => p.Email == email);
@@ -55,6 +76,8 @@ namespace Business.Concrete
             var result = _userDal.Get(p => p.Id == id);
             return result;
         }
+
+  
 
         public List<User> GetList()
         {
