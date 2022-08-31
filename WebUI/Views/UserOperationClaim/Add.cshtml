@@ -1,33 +1,12 @@
 ﻿@using Entities.Concrete
 @model UserOperationClaim
 
-<h1>USER OPERATİON CLAİM EKLEME SAYFASI</h1>
-<br />
+
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-@*<div class="row mt-4">
-    <div class="col-md-4 offset-4">
-        <form action="/UserOperationClaim/Add" method="post" enctype="multipart/form-data">
 
 
-
-            <div class="form-group pb-2 ">
-                <label for="exampleInputEmail1">Kullanıcı Adı </label>
-                <input type="text" name="" class="form-control">
-            </div>
-               <div class="form-group pb-2 ">
-                <label for="exampleInputEmail1">Operasyon Adı </label>
-                <input type="text" name="name" class="form-control">
-            </div>
-
-
-            <button type="submit" class="btn btn-primary">KAYDET</button>
-            <h2 class="text-danger">@TempData["Hata"]</h2>
-        </form>
-    </div>
-</div>*@
-
-<form asp-action="Add" asp-controller="UserOperationClaim" method="post" class="login100-form validate-form">
+@*<form asp-action="Add" asp-controller="UserOperationClaim" method="post" class="login100-form validate-form">
     <div class="col-md-4 offset-4">
         <div>
             <span class="label-input100">Kullanıcı</span>
@@ -47,6 +26,52 @@
         </button>
         </div>
     </div>
- 
-        
-</form>
+
+
+</form>*@
+
+
+<div class="row" id="table-head">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">User Operation Ekleme Sayfası</h4>
+            </div>
+            <form asp-action="Add" asp-controller="UserOperationClaim" method="post" class="login100-form validate-form">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>User Operation Adı</td>
+                                <td>
+                                    <input class="input100" type="text" asp-for="UserId">
+                                    <span asp-validation-for="UserId" class="text-danger"></span>
+                                </td>
+                                <br />
+
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>
+                                    <input class="input100" type="text" asp-for="OperationClaimId">
+                                    <span asp-validation-for="OperationClaimId" class="text-danger"></span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary">KAYDET </button>
+
+                                </td>
+                                @TempData["Hata"]
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

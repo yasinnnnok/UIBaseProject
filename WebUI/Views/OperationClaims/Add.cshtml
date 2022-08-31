@@ -1,18 +1,16 @@
 ﻿@using Entities.Concrete
 @model OperationClaim
 
-<h1>OPERATİON CLAİM EKLEME SAYFASI</h1>
-<br />
+
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 
 
-<form asp-action="Add" asp-controller="OperationClaims" method="post" class="login100-form validate-form">
+@*<form asp-action="Add" asp-controller="OperationClaims" method="post" class="login100-form validate-form">
     <div class="col-md-4 offset-4">
         <div>
             <span class="label-input100">Kullanıcı</span>
             <input class="input100" type="text" asp-for="Name">
-            <span class="focus-input100"></span>
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
 
@@ -24,4 +22,40 @@
     </div>
  
         
-</form>
+</form>*@
+
+
+<div class="row" id="table-head">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Operation Claims Ekleme</h4>
+            </div>
+            <form asp-action="Add" asp-controller="OperationClaims" method="post" class="login100-form validate-form">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>Operasyon Adı</td>
+                                <td>
+                                    <input class="input100" type="text" asp-for="Name">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </td>
+                                <br />
+
+                            </tr>                      
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary">KAYDET </button>
+                                </td>
+                                @TempData["Hata"]
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

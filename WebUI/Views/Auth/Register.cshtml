@@ -3,13 +3,12 @@
 
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
+@*
 <div asp-validation-summary="All">
-</div>
-
+</div>*@
 
 <!-- Table head options start operation claims -->
-@*<div class="row" id="table-head">
+<div class="row" id="table-head">
     <div class="col-6">
         <div class="card">
             <div class="card-header">
@@ -17,37 +16,48 @@
             </div>
             <form asp-action="Register" asp-controller="Auth" method="post" class="login100-form validate-form">
                 <div class="table-responsive">
-                    <table class="table">
-
+                    <table class="table table-borderless">
                         <tbody>
-
                             <tr>
                                 <td>Kullanıcı Adı</td>
-                                <td> <input class="input100" type="text" asp-for="Name"></td>
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <td>
+                                    <input class="input100" type="text" asp-for="Name">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </td>
                                 <br />
 
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td><input class="input100" type="text" asp-for="Email"></td>
-                                <span asp-validation-for="Email" class="text-danger"></span>
+                                <td>
+                                    <input class="input100" type="text" asp-for="Email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </td>
+
                             </tr>
                             <tr>
                                 <td>Image Url</td>
-                                <td><input class="input100" type="text" asp-for="ImageUrl"></td>
-                                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                <td>
+                                    <input class="input100" type="text" asp-for="ImageUrl">
+                                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                </td>
+
                             </tr>
                             <tr>
                                 <td>Şifre</td>
-                                <td><input class="input100" type="text" asp-for="Password"></td>
-                                <span asp-validation-for="Password" class="text-danger"></span>
+                                <td>
+                                    <input class="input100" type="text" asp-for="Password">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </td>
+
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
                                     <button type="submit" class="btn btn-primary">KAYDET </button>
+
                                 </td>
+                                @TempData["Hata"]
                             </tr>
 
                         </tbody>
@@ -55,11 +65,10 @@
                 </div>
             </form>
         </div>
-
     </div>
-</div>*@
+</div>
 <!-- Table head options end -->
-
+@*
 <form asp-action="Register" asp-controller="Auth" method="post" class="login100-form validate-form">
     <div class="col-md-4 offset-4">
         <div>
@@ -95,4 +104,4 @@
     </div>
 
 
-</form>
+</form>*@
