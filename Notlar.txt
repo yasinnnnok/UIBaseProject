@@ -1,8 +1,12 @@
-1) USerOperation sayfasýnda kayýtlar sayý olarak doðru geliyor fakar son ismi yazdýrýyor hep.
+YAPILACAKLAR----------------------------------------------------------------------------------
+1) USerOperation eklerken Select List gerekli. Ayrýca id yerine isimler seçilmeli
+2) Yetkilendirme gerekli
+3) Static mesaj sistemi gelmeli
 
 
 
 
 
-KODLAR
- <a class="btn btn-primary" asp-controller="User" asp-action="Add"><i class="fa-solid fa-plus"></i></a>
+
+KOD(NOTLARI)----------------------------------------------------------------------------------
+<a class="btn btn-primary" asp-controller="User" asp-action="Add"><i class="fa-solid fa-plus"></i></a>

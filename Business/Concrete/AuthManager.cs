@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Contans;
 using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Hashing;
 using Core.Utilities.Result.Abstract;
@@ -54,11 +55,11 @@ namespace Business.Concrete
                 {
                     _userService.Add(authDto);
                   
-                    return new SuccessResult("Kullanıcı kaydı başarı ile tamamlandı.");
+                    return new SuccessResult(AuthMessages.AddUser);
                 }
                 else
                 {           
-                    return new ErrorResult("Bu mail adresi daha önce kullanılmış.");
+                    return new ErrorResult(AuthMessages.WrongMail);
 
                 }
             }

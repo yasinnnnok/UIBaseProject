@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Contans;
 using Core.Utilities.Hashing;
 using Core.Utilities.Result.Abstract;
 using Core.Utilities.Result.Concrete;
@@ -46,7 +47,7 @@ namespace Business.Concrete
             bool result = HashingHelper.VerifyPasswordHash(userChangePasswordDto.CurrentPassword, user.PasswordHash, user.PasswordSalt);
             if (!result)
             {
-                return new ErrorResult("Mevcut şifrenizi yanlış girdiniz.");
+                return new ErrorResult(UserMessages.CurrentWrongPassword);
             }
 
 
@@ -56,7 +57,7 @@ namespace Business.Concrete
             user.PasswordHash=passwordHash;
             user.PasswordSalt=passwordSalt;
             _userDal.Update(user);
-            return new SuccessResult("Şifreniz başarı ile güncellendi.");
+            return new SuccessResult(UserMessages.ChangePassword);
         }
 
         public void Delete(User user)
