@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using System;
@@ -26,6 +27,8 @@ namespace Business.DependencyResolves.Autofac
             builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationDal>();
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
+
+            builder.RegisterType<TokenHandler>().As<ITokenHandler>();
         }
 
 

@@ -5,20 +5,44 @@ using Business.ValidationRules.FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
     .AddFluentValidation(configration => configration.RegisterValidatorsFromAssemblyContaining<AuthValidator>());
-   
+ 
 //Autofac ile DependencyInjection ekleme
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder=>builder.RegisterModule(new AutofacBusinessModule()));
 
-//****YABANCI siteden
-//builder.Services.AddFluentValidation(c=>c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
-//builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
+//JWT
+//ValidateAudience- hangi sitelerin kontrol etmesi
+//ValidateIssuer-oluþturacak tokeni kimin daðýttýðýný
+//ValidateLifetime-belli sonra süre bitsin. bitme süresi olsunmu. 
+//ValidateIssuerSigningKey - üreteceðk token deðerinin uygulamamýza ait old. doðrulamasýdýr.
+//ClockSkew->server ile saat farký olursa
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        ValidateLifetime = false,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Token:Issuer"],
+        ValidAudience = builder.Configuration["Token:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
+        ClockSkew = TimeSpan.Zero
+
+    };
+
+
+});
+
 
 var app = builder.Build();
 
