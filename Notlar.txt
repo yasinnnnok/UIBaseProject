@@ -1,12 +1,32 @@
+
+
 YAPILACAKLAR----------------------------------------------------------------------------------
+1) Successdata yapýsý kurulmalý
 1) USerOperation eklerken Select List gerekli. Ayrýca id yerine isimler seçilmeli
 2) Yetkilendirme gerekli
 3) Static mesaj sistemi gelmeli
 
 
-
-
-
-
 KOD(NOTLARI)----------------------------------------------------------------------------------
 <a class="btn btn-primary" asp-controller="User" asp-action="Add"><i class="fa-solid fa-plus"></i></a>
+
+---çalýþan kod-auth manager
+        public bool Login(LoginAuthDto loginAuthDto)
+        {
+            var user = _userService.GetByEmail(loginAuthDto.Email);
+            if (user!=null)
+            {
+                var result = HashingHelper.VerifyPasswordHash(loginAuthDto.Password, user.PasswordHash, user.PasswordSalt);
+                List<OperationClaim> operationClaims = _userService.GetUserOperationClaims(user.Id);
+                if (result)
+                {
+                    Token token = new Token();
+                    token = _tokenHandler.CreateToken(user,operationClaims);
+
+                    return true;
+                }
+            }           
+            
+            return false;
+
+        }

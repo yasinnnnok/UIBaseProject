@@ -25,7 +25,7 @@ namespace Business.Concrete
         }
 
 
-        public void Add(AuthDto authDto)
+        public IResult Add(AuthDto authDto)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePassword(authDto.Password, out passwordHash, out passwordSalt);
@@ -39,6 +39,7 @@ namespace Business.Concrete
             user.ImageUrl = authDto.ImageUrl;
 
             _userDal.Add(user);
+            return new SuccessResult();
         }
 
         public IResult ChangePassword(UserChangePasswordDto userChangePasswordDto)
@@ -60,9 +61,10 @@ namespace Business.Concrete
             return new SuccessResult(UserMessages.ChangePassword);
         }
 
-        public void Delete(User user)
+        public IResult Delete(User user)
         {
             _userDal.Delete(user);
+            return new SuccessResult(UserMessages.DeletedUser);
         }
 
 
@@ -72,22 +74,28 @@ namespace Business.Concrete
             return result;
         }
 
-        public User GetById(int id)
+        public IDataResult<User> GetById(int id)
         {
             var result = _userDal.Get(p => p.Id == id);
-            return result;
+            return new SuccessDataResult<User>(result);
         }
 
   
 
-        public List<User> GetList()
+        public IDataResult<List<User>> GetList()
         {
-            return _userDal.GetAll();
+            return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
 
-        public void Update(User user)
+        public IResult Update(User user)
         {
             _userDal.Update(user);
+            return new SuccessResult(UserMessages.UpdatedUser);
+        }
+
+        public List<OperationClaim> GetUserOperationClaims(int userId)
+        {
+            return _userDal.GetUserOperationClaims(userId);
         }
     }
 }

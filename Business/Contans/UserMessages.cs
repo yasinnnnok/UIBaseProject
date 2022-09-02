@@ -11,5 +11,8 @@ namespace Business.Contans
        
         public static string CurrentWrongPassword = "Mevcut şifrenizi yanlış girdiniz.";
         public static string ChangePassword = "Şifreniz başarı ile güncellendi";
+        public static string AddMessages = "Ekleme işlemi başarılı";
+        public static string UpdatedUser = "Kullanıcı başarı ile güncellendi";
+        public static string DeletedUser = "Kullanıcınız başarı ile silindi";
     }
 }

@@ -18,7 +18,7 @@ namespace WebUI.Controllers
 
         public IActionResult Index()
         {
-            var values = _userService.GetList();
+            var values = _userService.GetList().Data;
             return View(values);
         }
 
@@ -27,7 +27,7 @@ namespace WebUI.Controllers
 
         public IActionResult Delete(int id)
         {
-            var user= _userService.GetById(id);
+            var user= _userService.GetById(id).Data;
             _userService.Delete(user);
             return RedirectToAction("Index", "User");
         }
@@ -35,7 +35,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var result = _userService.GetById(id);
+            var result = _userService.GetById(id).Data;
             return View(result);
         }
 
@@ -58,7 +58,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public IActionResult ChangePassword(int id)
         {
-            var result = _userService.GetById(id);
+            var result = _userService.GetById(id).Data;
             UserChangePasswordDto changePasswordDto = new UserChangePasswordDto();
             changePasswordDto.UserId = result.Id;
             return View(changePasswordDto);

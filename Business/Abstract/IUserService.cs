@@ -11,15 +11,16 @@ namespace Business.Abstract
 {
     public  interface IUserService
     {
-        void Add(AuthDto authDto);
-        void Delete(User user);
-        void Update(User user);
+        IResult Add(AuthDto authDto);
+        IResult Delete(User user);
+        IResult Update(User user);
         IResult ChangePassword(UserChangePasswordDto userChangePasswordDto);
 
         User GetByEmail(string Email);
 
-        List<User> GetList();
-        User GetById(int id);
+        IDataResult<List<User>> GetList();
+        IDataResult<User> GetById(int id);
+        List<OperationClaim> GetUserOperationClaims(int userId);
      
 
 

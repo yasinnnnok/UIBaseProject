@@ -4,6 +4,8 @@ using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Hashing;
 using Core.Utilities.Result.Abstract;
 using Core.Utilities.Result.Concrete;
+using Core.Utilities.Security.JWT;
+using Entities.Concrete;
 using Entities.Dtos;
 using FluentValidation.Results;
 using System;
@@ -17,10 +19,12 @@ namespace Business.Concrete
     public class AuthManager : IAuthService
     {
         private readonly IUserService _userService;
+        private readonly ITokenHandler _tokenHandler;
 
-        public AuthManager(IUserService userService)
+        public AuthManager(IUserService userService,ITokenHandler tokenHandler)
         {
             _userService= userService;
+            _tokenHandler= tokenHandler;
         }
 
         public bool Login(LoginAuthDto loginAuthDto)
@@ -29,9 +33,12 @@ namespace Business.Concrete
             if (user!=null)
             {
                 var result = HashingHelper.VerifyPasswordHash(loginAuthDto.Password, user.PasswordHash, user.PasswordSalt);
-
+                List<OperationClaim> operationClaims = _userService.GetUserOperationClaims(user.Id);
                 if (result)
                 {
+                    Token token = new Token();
+                    token = _tokenHandler.CreateToken(user,operationClaims);
+
                     return true;
                 }
             }           
