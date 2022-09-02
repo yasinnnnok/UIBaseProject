@@ -27,7 +27,7 @@ namespace Business.Concrete
             _tokenHandler= tokenHandler;
         }
 
-        public bool Login(LoginAuthDto loginAuthDto)
+        public IDataResult<Token> Login(LoginAuthDto loginAuthDto)
         {
             var user = _userService.GetByEmail(loginAuthDto.Email);
             if (user!=null)
@@ -38,22 +38,18 @@ namespace Business.Concrete
                 {
                     Token token = new Token();
                     token = _tokenHandler.CreateToken(user,operationClaims);
-
-                    return true;
+                    return new SuccessDataResult<Token>(token);
                 }
-            }           
-            
-            return false;
-
+                return new ErrorDataResult<Token>(AuthMessages.WrongPassword);
+            }
+            return new ErrorDataResult<Token>(AuthMessages.WrongNotMail); 
         }
-
         //succcess : true  false
         //message  string
         public IResult Register(AuthDto authDto)
         {
             AuthValidator validationRules = new AuthValidator();
             ValidationResult validationResult = validationRules.Validate(authDto);
-
           
             if (validationResult.IsValid)
             {
@@ -66,7 +62,7 @@ namespace Business.Concrete
                 }
                 else
                 {           
-                    return new ErrorResult(AuthMessages.WrongMail);
+                    return new ErrorResult(AuthMessages.WrongExistMail);
 
                 }
             }

@@ -45,11 +45,11 @@ namespace WebUI.Controllers
         public IActionResult Login(LoginAuthDto loginAuthDto)
         {
             var result = _authService.Login(loginAuthDto);
-            if (result)
+            if (result.Success)
             {
                 return RedirectToAction("Index", "Home");
             }
-            TempData["LoginHata"] = "Hatalı Giriş";
+            TempData["LoginHata"] = result.Message;
             return View();
         }
     }

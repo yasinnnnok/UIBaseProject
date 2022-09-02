@@ -9,7 +9,9 @@ namespace Business.Contans
     public class AuthMessages
     {
         public static string AddUser = "Kullanıcı kaydı başarıyla güncellendi.";
-        public static string WrongMail = "Bu mail adresi daha önce kullanılmış.";
+        public static string WrongExistMail = "Bu mail adresi daha önce kullanılmış.";
+        public static string WrongNotMail = "Bu mail adresi daha önce kullanılmış.";
+        public static string WrongPassword = "Şifreniz yanlış.";
 
 
     }
