@@ -14,6 +14,7 @@ namespace Business.Abstract
         IResult Add(UserOperationClaim userOperationClaim);
         void Delete(UserOperationClaim userOperationClaim);
         void Update(UserOperationClaim userOperationClaim);
+        bool GetByUserOperationClaim(int userId, int operationId);
 
 
         List<UserDto> GetList();

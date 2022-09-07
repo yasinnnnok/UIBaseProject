@@ -36,9 +36,13 @@ namespace Business.Concrete
 
             if (result.IsValid)
             {
-                _userOperationDal.Add(userOperationClaim);
-                return new SuccessResult("Ekleme işlemi başarılı...");
-            }
+                bool isExits = GetByUserOperationClaim(userOperationClaim.UserId,userOperationClaim.OperationClaimId);
+                if (isExits)
+                {
+                    _userOperationDal.Add(userOperationClaim);
+                    return new SuccessResult("Ekleme işlemi başarılı...");
+                }
+                return new ErrorResult("Bu kişiye bu rol  daha önce eklenmiş.");            }
 
             return new ErrorResult("Ekleme işlemi başarısız...");
 
@@ -53,6 +57,16 @@ namespace Business.Concrete
         {
             var result = _userOperationDal.Get(p=>p.Id == id);
             return result;
+        }
+
+        public bool GetByUserOperationClaim(int userId, int operationId)
+        {
+           var list =_userOperationDal.Get(p=>p.UserId == userId && p.OperationClaimId==operationId);
+            if (list!=null)
+            {
+                return false;
+            }
+            return true;
         }
 
         public List<UserDto> GetList()
