@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
+using Entities.Dtos;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,16 +29,16 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(UserOperationClaim userOperationClaim)
+        public IActionResult Add(UserDto userDto)
         {
 
-            var result = _userOperationClaimService.Add(userOperationClaim);
+            var result = _userOperationClaimService.Add(userDto);
             if (result.Success)
             {
                 return RedirectToAction("Index", "UserOperationClaim");
             }
             TempData["Hata"] = result.Message;
-            return View(userOperationClaim);
+            return View(userDto);
 
         }
 
@@ -58,14 +59,14 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Update(UserOperationClaim userOperationClaim)
         {
-            UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
-            ValidationResult result = validationRules.Validate(userOperationClaim);
-            if (result.IsValid)
-            {
+            //UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
+            //ValidationResult result = validationRules.Validate(userOperationClaim);
+            //if (result.IsValid)
+            //{
                 _userOperationClaimService.Update(userOperationClaim);
                 return RedirectToAction("Index", "UserOperationClaim");
-            }
-            return View(userOperationClaim);
+            //}
+            //return View(userOperationClaim);
         }
 
 

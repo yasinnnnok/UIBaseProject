@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.Dtos;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public  class UserOperationClaimValidator:AbstractValidator<UserOperationClaim>
+    public  class UserOperationClaimValidator:AbstractValidator<UserDto>
     {
         public UserOperationClaimValidator()
         {
-            RuleFor(p => p.UserId).NotEmpty().WithMessage("User boş geçilemez.");
-            RuleFor(p => p.OperationClaimId).NotEmpty().WithMessage("Operation Claim boş geçilemez.");
+            RuleFor(p => p.KullaniciAdi).NotEmpty().WithMessage("User boş geçilemez.");
+            RuleFor(p => p.OperasyonAdi).NotEmpty().WithMessage("Operation Claim boş geçilemez.");
         }
     }
 }

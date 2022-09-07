@@ -1,34 +1,9 @@
-﻿@using Entities.Concrete
-@model UserOperationClaim
+﻿
+@using Entities.Dtos
+@model UserDto
 
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
-
-
-@*<form asp-action="Add" asp-controller="UserOperationClaim" method="post" class="login100-form validate-form">
-    <div class="col-md-4 offset-4">
-        <div>
-            <span class="label-input100">Kullanıcı</span>
-            <input class="input100" type="text" asp-for="UserId">
-            <span class="focus-input100"></span>
-            <span asp-validation-for="UserId" class="text-danger"></span>
-        </div>
-             <div>
-            <span class="label-input100">Operasyon</span>
-            <input class="input100" type="text" asp-for="OperationClaimId">
-            <span class="focus-input100"></span>
-            <span asp-validation-for="OperationClaimId" class="text-danger"></span>
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary">
-            KAYDET
-        </button>
-        </div>
-    </div>
-
-
-</form>*@
 
 
 <div class="row" id="table-head">
@@ -42,19 +17,19 @@
                     <table class="table table-borderless">
                         <tbody>
                             <tr>
-                                <td>User Operation Adı</td>
+                                <td>Kullanıcı Adı</td>
                                 <td>
-                                    <input class="input100" type="text" asp-for="UserId">
-                                    <span asp-validation-for="UserId" class="text-danger"></span>
+                                    <input class="input100" type="text" asp-for="KullaniciAdi">
+                                    <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
                                 </td>
                                 <br />
 
                             </tr>
                             <tr>
-                                <td>Email</td>
+                                <td>Operasyon Adı</td>
                                 <td>
-                                    <input class="input100" type="text" asp-for="OperationClaimId">
-                                    <span asp-validation-for="OperationClaimId" class="text-danger"></span>
+                                    <input class="input100" type="text" asp-for="OperasyonAdi">
+                                    <span asp-validation-for="OperasyonAdi" class="text-danger"></span>
                                 </td>
 
                             </tr>

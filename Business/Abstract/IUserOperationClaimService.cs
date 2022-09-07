@@ -11,7 +11,8 @@ namespace Business.Abstract
 {
     public  interface IUserOperationClaimService
     {
-        IResult Add(UserOperationClaim userOperationClaim);
+        IResult Add(UserDto userDto);
+       
         void Delete(UserOperationClaim userOperationClaim);
         void Update(UserOperationClaim userOperationClaim);
         bool GetByUserOperationClaim(int userId, int operationId);

@@ -29,18 +29,28 @@ namespace Business.Concrete
             _operationClaimDal = operationClaimDal;
         }
 
-        public IResult Add(UserOperationClaim userOperationClaim)
+        public IResult Add(UserDto userDto)
         {
             UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
-            ValidationResult result = validationRules.Validate(userOperationClaim);
+            ValidationResult result = validationRules.Validate(userDto);
+
+            var eklenecek = new UserOperationClaim();
 
             if (result.IsValid)
             {
-                bool isExits = GetByUserOperationClaim(userOperationClaim.UserId,userOperationClaim.OperationClaimId);
+                bool isExits = GetByUserOperationClaim(userDto.UserId,userDto.OperationClaimId);
                 if (isExits)
                 {
-                    _userOperationDal.Add(userOperationClaim);
+                    var user = _userDal.Get(x=>x.Name==userDto.KullaniciAdi);
+                    var operationClaim = _operationClaimDal.Get(x => x.Name == userDto.OperasyonAdi);
+
+                    eklenecek.UserId = user.Id;
+                    eklenecek.OperationClaimId = operationClaim.Id;
+                    _userOperationDal.Add(eklenecek);
+
                     return new SuccessResult("Ekleme işlemi başarılı...");
+                
+                
                 }
                 return new ErrorResult("Bu kişiye bu rol  daha önce eklenmiş.");            }
 
