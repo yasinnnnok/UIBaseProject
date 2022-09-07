@@ -5,6 +5,7 @@ YAPILACAKLAR--------------------------------------------------------------------
 1) USerOperation eklerken Select List gerekli. Ayrýca id yerine isimler seçilmeli
 2) Yetkilendirme gerekli
 3) Static mesaj sistemi gelmeli
+4) UserOperation ADD sayfasýnda daha önce varmý Operation Claim ADD sayfasýnda daha önce varmý kontrol edilmeli.
 
 
 KOD(NOTLARI)----------------------------------------------------------------------------------

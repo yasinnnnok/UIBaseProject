@@ -1,7 +1,11 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Utilities.Result.Abstract;
+using Core.Utilities.Result.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +29,19 @@ namespace Business.Concrete
             _operationClaimDal = operationClaimDal;
         }
 
-        public void Add(UserOperationClaim userOperationClaim)
+        public IResult Add(UserOperationClaim userOperationClaim)
         {
-            _userOperationDal.Add(userOperationClaim);
+            UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
+            ValidationResult result = validationRules.Validate(userOperationClaim);
+
+            if (result.IsValid)
+            {
+                _userOperationDal.Add(userOperationClaim);
+                return new SuccessResult("Ekleme işlemi başarılı...");
+            }
+
+            return new ErrorResult("Ekleme işlemi başarısız...");
+
         }
 
         public void Delete(UserOperationClaim userOperationClaim)

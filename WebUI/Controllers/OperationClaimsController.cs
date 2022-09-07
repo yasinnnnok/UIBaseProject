@@ -20,24 +20,21 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         public IActionResult Add()
-        {            
+        {
             return View();
         }
 
         [HttpPost]
         public IActionResult Add(OperationClaim operationClaim)
         {
-            OperationClaimsValidator validationRules = new OperationClaimsValidator();
-            ValidationResult result = validationRules.Validate(operationClaim);
 
-
-            if (result.IsValid)
+            var result = _operationClaimService.Add(operationClaim);
+            if (result.Success)
             {
-                _operationClaimService.Add(operationClaim);
                 return RedirectToAction("Index", "OperationClaims");
             }
 
-
+            TempData["Hata"] = result.Message;
             return View(operationClaim);
         }
 
@@ -51,7 +48,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var result = _operationClaimService.GetById(id);            
+            var result = _operationClaimService.GetById(id);
             return View(result);
         }
 

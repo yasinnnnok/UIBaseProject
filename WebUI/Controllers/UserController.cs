@@ -22,8 +22,6 @@ namespace WebUI.Controllers
             return View(values);
         }
 
-     
- 
 
         public IActionResult Delete(int id)
         {

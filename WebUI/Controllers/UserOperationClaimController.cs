@@ -30,17 +30,15 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Add(UserOperationClaim userOperationClaim)
         {
-            UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
-            ValidationResult result= validationRules.Validate(userOperationClaim);
 
-            if (result.IsValid)
+            var result = _userOperationClaimService.Add(userOperationClaim);
+            if (result.Success)
             {
-                _userOperationClaimService.Add(userOperationClaim);
                 return RedirectToAction("Index", "UserOperationClaim");
             }
-
+            TempData["Hata"] = result.Message;
             return View(userOperationClaim);
-           
+
         }
 
         public IActionResult Delete(int id)
