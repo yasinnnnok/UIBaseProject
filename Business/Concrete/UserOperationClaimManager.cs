@@ -22,10 +22,10 @@ namespace Business.Concrete
         private readonly IOperationClaimDal _operationClaimDal;
 
         //consructor ile ürettik
-        public UserOperationClaimManager(IUserOperationDal userOperationDal,IUserDal userDal, IOperationClaimDal operationClaimDal)
+        public UserOperationClaimManager(IUserOperationDal userOperationDal, IUserDal userDal, IOperationClaimDal operationClaimDal)
         {
             _userOperationDal = userOperationDal;
-            _userDal= userDal;
+            _userDal = userDal;
             _operationClaimDal = operationClaimDal;
         }
 
@@ -38,23 +38,22 @@ namespace Business.Concrete
 
             if (result.IsValid)
             {
-                bool isExits = GetByUserOperationClaim(userDto.UserId,userDto.OperationClaimId);
-                if (isExits)
+                IResult isExits = GetByUserOperationClaim(userDto.KullaniciAdi, userDto.OperasyonAdi);
+                if (isExits.Success)
                 {
-                    var user = _userDal.Get(x=>x.Name==userDto.KullaniciAdi);
+                    var user = _userDal.Get(x => x.Name == userDto.KullaniciAdi);
                     var operationClaim = _operationClaimDal.Get(x => x.Name == userDto.OperasyonAdi);
-
                     eklenecek.UserId = user.Id;
                     eklenecek.OperationClaimId = operationClaim.Id;
                     _userOperationDal.Add(eklenecek);
 
                     return new SuccessResult("Ekleme işlemi başarılı...");
-                
-                
-                }
-                return new ErrorResult("Bu kişiye bu rol  daha önce eklenmiş.");            }
 
-            return new ErrorResult("Ekleme işlemi başarısız...");
+                }
+                return new ErrorResult(isExits.Message);
+            }
+
+            return new ErrorResult("Girişleri Uygun yazınız.");
 
         }
 
@@ -65,25 +64,32 @@ namespace Business.Concrete
 
         public UserOperationClaim GetById(int id)
         {
-            var result = _userOperationDal.Get(p=>p.Id == id);
+            var result = _userOperationDal.Get(p => p.Id == id);
             return result;
         }
 
-        public bool GetByUserOperationClaim(int userId, int operationId)
+        public IResult GetByUserOperationClaim(string userName, string operationName)
         {
-           var list =_userOperationDal.Get(p=>p.UserId == userId && p.OperationClaimId==operationId);
-            if (list!=null)
+            var user = _userDal.Get(x => x.Name == userName);
+            var operationClaim = _operationClaimDal.Get(x => x.Name == operationName);
+          
+            if (user != null && operationClaim != null)
             {
-                return false;
+                var list = _userOperationDal.Get(p => p.UserId == user.Id && p.OperationClaimId == operationClaim.Id);
+                if (list != null)
+                {
+                    return new ErrorResult("Bu kullanıcıya bu yetki atanmış.");
+                }
+                return new SuccessResult("Yetki atama işleminiz tamamlandı.");
             }
-            return true;
+            return new ErrorResult("Böyle bir kullanıcı yada rol yok.");
         }
 
         public List<UserDto> GetList()
         {
 
             var userOperationAll = _userOperationDal.GetAll();
-            
+
             List<UserDto> result = new List<UserDto>();
             foreach (var item in userOperationAll)
             {
@@ -98,7 +104,7 @@ namespace Business.Concrete
                 userDto.OperasyonAdi = opertaion.Name;
                 result.Add(userDto);//Bi bak
             }
-            
+
             return result;
         }
 
