@@ -38,17 +38,19 @@ namespace Business.Concrete
 
             if (result.IsValid)
             {
-                IResult isExits = GetByUserOperationClaim(userDto.KullaniciAdi, userDto.OperasyonAdi);
+                User user = _userDal.Get(x => x.Name == userDto.KullaniciAdi);
+                OperationClaim operationClaim = _operationClaimDal.Get(x => x.Name == userDto.OperasyonAdi);
+
+                IResult isExits = GetByUserOperationClaim(user, operationClaim);
+
                 if (isExits.Success)
                 {
-                    var user = _userDal.Get(x => x.Name == userDto.KullaniciAdi);
-                    var operationClaim = _operationClaimDal.Get(x => x.Name == userDto.OperasyonAdi);
+
                     eklenecek.UserId = user.Id;
                     eklenecek.OperationClaimId = operationClaim.Id;
                     _userOperationDal.Add(eklenecek);
 
                     return new SuccessResult("Ekleme işlemi başarılı...");
-
                 }
                 return new ErrorResult(isExits.Message);
             }
@@ -68,11 +70,10 @@ namespace Business.Concrete
             return result;
         }
 
-        public IResult GetByUserOperationClaim(string userName, string operationName)
+        public IResult GetByUserOperationClaim(User user, OperationClaim operationClaim)
         {
-            var user = _userDal.Get(x => x.Name == userName);
-            var operationClaim = _operationClaimDal.Get(x => x.Name == operationName);
-          
+
+
             if (user != null && operationClaim != null)
             {
                 var list = _userOperationDal.Get(p => p.UserId == user.Id && p.OperationClaimId == operationClaim.Id);
@@ -108,9 +109,34 @@ namespace Business.Concrete
             return result;
         }
 
-        public void Update(UserOperationClaim userOperationClaim)
+        public IResult Update(UserDto userDto)
         {
-            _userOperationDal.Update(userOperationClaim);
+            UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
+            ValidationResult result = validationRules.Validate(userDto);
+
+            var düzenlenecek = new UserOperationClaim();
+            düzenlenecek.Id = userDto.Id;
+            if (result.IsValid)
+            {
+                User user = _userDal.Get(x => x.Name == userDto.KullaniciAdi);
+                OperationClaim operationClaim = _operationClaimDal.Get(x => x.Name == userDto.OperasyonAdi);
+
+                IResult isExits = GetByUserOperationClaim(user, operationClaim);
+
+                if (isExits.Success)
+                {
+
+                    düzenlenecek.UserId = user.Id;
+                    düzenlenecek.OperationClaimId = operationClaim.Id;
+                    _userOperationDal.Update(düzenlenecek);
+
+                    return new SuccessResult("Ekleme işlemi başarılı...");
+                }
+                return new ErrorResult(isExits.Message);
+            }
+
+            return new ErrorResult("Girişleri Uygun yazınız.");
+
         }
     }
 }

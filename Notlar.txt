@@ -4,8 +4,7 @@ YAPILACAKLAR--------------------------------------------------------------------
 1) ValidatonTool yazýlmalý
 2) USerOperation eklerken Select List gerekli. Ayrýca id yerine isimler seçilmeli
 1) UserOperation Update sayfasýnda validator.
-
-2) Yetkilendirme gerekli
+2) Yetkilendirme gerekli. Þuan JWT ile çalýþmýyor.
 
 
 YAPILANLAR-------------------------------------------------------------------------------------

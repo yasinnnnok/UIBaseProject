@@ -10,9 +10,12 @@ namespace WebUI.Controllers
     public class UserOperationClaimController : Controller
     {
         private readonly IUserOperationClaimService _userOperationClaimService;
-        public UserOperationClaimController(IUserOperationClaimService userOperationClaimService)
+        private readonly IUserService _userService;
+
+        public UserOperationClaimController(IUserOperationClaimService userOperationClaimService, IUserService userService)
         {
             _userOperationClaimService = userOperationClaimService;
+            _userService = userService;
         }
 
 
@@ -53,22 +56,34 @@ namespace WebUI.Controllers
         public IActionResult Update(int id)
         {
             var result = _userOperationClaimService.GetById(id);
-            return View(result);
+            UserDto userOperation = new UserDto();
+            userOperation.Id = result.Id;
+            userOperation.UserId = result.UserId;
+            userOperation.OperationClaimId = result.OperationClaimId;
+            var user = _userService.GetById(result.UserId);
+            userOperation.KullaniciAdi = user.Data.Name;
+            
+
+
+            return View(userOperation);
         }
 
         [HttpPost]
-        public IActionResult Update(UserOperationClaim userOperationClaim)
+        public IActionResult Update(UserDto userDto)
         {
-            //UserOperationClaimValidator validationRules = new UserOperationClaimValidator();
-            //ValidationResult result = validationRules.Validate(userOperationClaim);
-            //if (result.IsValid)
-            //{
-                _userOperationClaimService.Update(userOperationClaim);
+
+           var result=  _userOperationClaimService.Update(userDto);
+           
+            if (result.Success)
+            {
                 return RedirectToAction("Index", "UserOperationClaim");
-            //}
-            //return View(userOperationClaim);
+            }
+            TempData["Hata"] = result.Message;
+            return View(userDto);
+
         }
 
 
     }
 }
+   
