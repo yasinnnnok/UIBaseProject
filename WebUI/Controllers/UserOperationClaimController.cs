@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.Utilities.Result.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
 using FluentValidation.Results;
@@ -11,37 +12,45 @@ namespace WebUI.Controllers
     {
         private readonly IUserOperationClaimService _userOperationClaimService;
         private readonly IUserService _userService;
+        private readonly IOperationClaimService _operationClaimService;
 
-        public UserOperationClaimController(IUserOperationClaimService userOperationClaimService, IUserService userService)
+        public UserOperationClaimController(IUserOperationClaimService userOperationClaimService, IUserService userService, IOperationClaimService operationClaimService)
         {
             _userOperationClaimService = userOperationClaimService;
             _userService = userService;
+            _operationClaimService = operationClaimService;
         }
 
 
         public IActionResult Index()
         {
             var values = _userOperationClaimService.GetList();
+            
             return View(values);
         }
 
         [HttpGet]
         public IActionResult Add()
         {
-            return View();
+           var userList = _userService.GetList().Data.ToList();
+           var operationList = _operationClaimService.GetList().ToList();
+      
+
+            return View((new UserDto(),operationList, userList));
         }
 
         [HttpPost]
-        public IActionResult Add(UserDto userDto)
+        public IActionResult Add([Bind(Prefix = "Item1")] UserDto userDto)
         {
-
             var result = _userOperationClaimService.Add(userDto);
             if (result.Success)
             {
                 return RedirectToAction("Index", "UserOperationClaim");
             }
             TempData["Hata"] = result.Message;
-            return View(userDto);
+            var userList = _userService.GetList().Data.ToList();
+            var operationList = _operationClaimService.GetList().ToList();
+            return View((userDto, operationList, userList));
 
         }
 

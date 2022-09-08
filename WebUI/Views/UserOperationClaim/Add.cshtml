@@ -1,11 +1,22 @@
 ﻿
+@using Entities.Concrete
 @using Entities.Dtos
-@model UserDto
+@model (UserDto userDto,List<OperationClaim> operationClaims,List<User> users)
 
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-
+@foreach (var item in Model.operationClaims)
+{
+    @item.Name
+    <br />
+}
+<br />
+@foreach (var item in Model.users)
+{
+    @item.Email
+    <br />
+}
 <div class="row" id="table-head">
     <div class="col-6">
         <div class="card">
@@ -19,8 +30,9 @@
                             <tr>
                                 <td>Kullanıcı Adı</td>
                                 <td>
-                                    <input class="input100" type="text" asp-for="KullaniciAdi">
-                                    <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                                    @*<input class="input100" type="text" asp-for="userDto.KullaniciAdi">*@
+                                     <select asp-for="userDto.KullaniciAdi" asp-items="@(new SelectList(Model.users,"Name","Name"))"></select>
+                                    <span asp-validation-for="userDto.KullaniciAdi" class="text-danger"></span>
                                 </td>
                                 <br />
 
@@ -28,10 +40,14 @@
                             <tr>
                                 <td>Operasyon Adı</td>
                                 <td>
-                                    <input class="input100" type="text" asp-for="OperasyonAdi">
-                                    <span asp-validation-for="OperasyonAdi" class="text-danger"></span>
+                                    @*<input class="input100" type="text" asp-for="userDto.OperasyonAdi"> *@  
+                                     <select asp-for="userDto.OperasyonAdi" asp-items="@(new SelectList(Model.operationClaims,"Name","Name"))"></select>
+                                    <span asp-validation-for="userDto.OperasyonAdi" class="text-danger"></span>
                                 </td>
 
+                            </tr>
+                            <tr>
+                               
                             </tr>
 
                             <tr>
