@@ -65,20 +65,25 @@ namespace WebUI.Controllers
         public IActionResult Update(int id)
         {
             var result = _userOperationClaimService.GetById(id);
+            var user = _userService.GetById(result.UserId);
+
             UserDto userOperation = new UserDto();
             userOperation.Id = result.Id;
             userOperation.UserId = result.UserId;
-            userOperation.OperationClaimId = result.OperationClaimId;
-            var user = _userService.GetById(result.UserId);
+            userOperation.OperationClaimId = result.OperationClaimId;            
             userOperation.KullaniciAdi = user.Data.Name;
-            
+            var operationList = _operationClaimService.GetList().ToList();
 
 
-            return View(userOperation);
+            return View((userOperation, operationList));
+            //return View((new UserDto(), operationList, userOperation));
+
+         
         }
+       
 
         [HttpPost]
-        public IActionResult Update(UserDto userDto)
+        public IActionResult Update([Bind(Prefix ="Item1")] UserDto userDto)
         {
 
            var result=  _userOperationClaimService.Update(userDto);
@@ -88,7 +93,9 @@ namespace WebUI.Controllers
                 return RedirectToAction("Index", "UserOperationClaim");
             }
             TempData["Hata"] = result.Message;
-            return View(userDto);
+            
+            var operationList = _operationClaimService.GetList().ToList();
+            return View((userDto, operationList));
 
         }
 

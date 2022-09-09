@@ -1,12 +1,10 @@
 ﻿
+@using Entities.Concrete
 @using Entities.Dtos
-@model UserDto
+@model (UserDto userDto,List<OperationClaim>  operationClaims)
 
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
-
-
 
 
 
@@ -20,11 +18,11 @@
                 <div class="table-responsive">
                     <table class="table table-borderless">
                         <tbody>
-                            <tr>
+                            @Html.HiddenFor(x=>x.userDto.Id)
                                 <td>Kullanıcı Adı</td>
                                 <td>
-                                    <input readonly="readonly" class="input100" type="text"  asp-for="KullaniciAdi">
-                                    <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                                    <input readonly="readonly" class="input100" type="text"  asp-for="userDto.KullaniciAdi">
+                                    <span asp-validation-for="userDto.KullaniciAdi" class="text-danger"></span>
                                 </td>
                                 <br />
 
@@ -32,8 +30,11 @@
                             <tr>
                                 <td>Operasyon Adı</td>
                                 <td>
-                                    <input class="input100" type="text" asp-for="OperasyonAdi">
-                                    <span asp-validation-for="OperasyonAdi" class="text-danger"></span>
+                                    @*<input class="input100" type="text" asp-for="userDto.OperasyonAdi">*@
+                                     <select asp-for="userDto.OperasyonAdi" asp-items="@(new SelectList(Model.operationClaims,"Name","Name"))">
+                                         <option>Bir rol seçiniz.</option>
+                                     </select>
+                                    <span asp-validation-for="userDto.OperasyonAdi" class="text-danger"></span>
                                 </td>
 
                             </tr>
@@ -44,7 +45,10 @@
                                     <button type="submit" class="btn btn-primary">GÜNCELLE </button>
 
                                 </td>
-                                @TempData["Hata"]
+                               
+                            </tr>
+                            <tr>
+                                 @TempData["Hata"]
                             </tr>
 
                         </tbody>
