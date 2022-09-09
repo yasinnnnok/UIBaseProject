@@ -3,12 +3,12 @@
 YAPILACAKLAR----------------------------------------------------------------------------------
 1) REsim yükleme gösterme
 !) SÝLME ÝÞLEMLERÝNDE SÝLÝNEN KAYIT DÝÐER KAYITLARDA KULLANILIYORMU ? çok önemli yoksa hata verir.
-1) ValidatonTool yazýlmalý
-
-2) Yetkilendirme gerekli. Þuan JWT ile çalýþmýyor.
+2) Yetkilendirme gerekli. Þuan JWT ile çalýþmýyor. Authorize çalýþmýyor.
+3) ASpectler yazýlmalý
 
 
 YAPILANLAR-------------------------------------------------------------------------------------
+1) ValidatonTool yazýldý. AuthManagerda kullanýlýyor.
 2) USerOperation Update iþlemlerinde selecList gelmeli.
 2) USerOperation eklerken Select List gerekli. Ayrýca id yerine isimler seçilmeli
 1) UserOperation Update sayfasýnda validator.
