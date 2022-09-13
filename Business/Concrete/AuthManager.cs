@@ -59,7 +59,7 @@ namespace Business.Concrete
                 IResult result = BusinessRules.Run(
                      CheckIfEmailExists(authDto.Email),
                     resimTurDogrulama(authDto.Image.FileName),
-                      esimBirMbKucukmu(imgSize)
+                      resimBirMbKucukmu(authDto.Image.Length)
 
                     );
 
@@ -85,9 +85,12 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IResult esimBirMbKucukmu(int imgSize)
+        private IResult resimBirMbKucukmu(long imgSize)
         {
-            if (imgSize > 1)
+            decimal imgMbSize = Convert.ToDecimal(imgSize * 0.000001);
+
+
+            if (imgMbSize > 1)
             {
                 return new ErrorResult(AuthMessages.WrongImageSize);
             }
