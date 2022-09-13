@@ -27,6 +27,7 @@ namespace Business.DependencyResolves.Autofac
             builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationDal>();
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
+            builder.RegisterType<FileManager>().As<IFileService>();
 
             builder.RegisterType<TokenHandler>().As<ITokenHandler>();
         }

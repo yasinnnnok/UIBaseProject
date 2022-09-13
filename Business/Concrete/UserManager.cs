@@ -18,27 +18,28 @@ namespace Business.Concrete
     {
         //servisten implemente ettik ama Data Acces e bağlanıyoruz.
         private readonly IUserDal _userDal;
+        private readonly IFileService _fileService;
+
         //consructor ile ürettik
-        public UserManager(IUserDal userDal)
+        public UserManager(IUserDal userDal,IFileService fileService)
         {
             _userDal = userDal;
+            _fileService = fileService;
         }
 
 
         public IResult Add(AuthDto authDto)
         {
-            //format ve isimlendirmeyi alalım.
-            var fileFormat = authDto.Image.FileName.Substring(authDto.Image.FileName.LastIndexOf('.'));
-            fileFormat = fileFormat.ToLower();
-            string fileName = Guid.NewGuid().ToString()+fileFormat;
+           string fileName = _fileService.FileSave(authDto.Image,"./Content/img/");
+           var user = CreateUser(authDto,fileName);
+           
+            _userDal.Add(user);
+            return new SuccessResult();
+        }
 
-            string path = "./Content/img/"+ fileName;
-            using (var stream = System.IO.File.Create(path))
-            {
-                authDto.Image.CopyTo(stream);
-            }
-
-                byte[] passwordHash, passwordSalt;
+        private User CreateUser(AuthDto authDto,string fileName)
+        {
+            byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePassword(authDto.Password, out passwordHash, out passwordSalt);
 
             User user = new User();
@@ -48,10 +49,10 @@ namespace Business.Concrete
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             user.ImageUrl = fileName;
+            return user;
 
-            _userDal.Add(user);
-            return new SuccessResult();
         }
+
 
         public IResult ChangePassword(UserChangePasswordDto userChangePasswordDto)
         {
@@ -64,10 +65,10 @@ namespace Business.Concrete
 
 
             byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePassword(userChangePasswordDto.NewPassword,out passwordHash,out passwordSalt);
+            HashingHelper.CreatePassword(userChangePasswordDto.NewPassword, out passwordHash, out passwordSalt);
 
-            user.PasswordHash=passwordHash;
-            user.PasswordSalt=passwordSalt;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
             _userDal.Update(user);
             return new SuccessResult(UserMessages.ChangePassword);
         }
@@ -91,7 +92,7 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(result);
         }
 
-  
+
 
         public IDataResult<List<User>> GetList()
         {
