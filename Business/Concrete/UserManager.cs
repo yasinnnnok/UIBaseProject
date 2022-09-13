@@ -26,9 +26,19 @@ namespace Business.Concrete
 
 
         public IResult Add(AuthDto authDto)
-        {          
+        {
+            //format ve isimlendirmeyi alalım.
+            var fileFormat = authDto.Image.FileName.Substring(authDto.Image.FileName.LastIndexOf('.'));
+            fileFormat = fileFormat.ToLower();
+            string fileName = Guid.NewGuid().ToString()+fileFormat;
 
-            byte[] passwordHash, passwordSalt;
+            string path = "./Content/img/"+ fileName;
+            using (var stream = System.IO.File.Create(path))
+            {
+                authDto.Image.CopyTo(stream);
+            }
+
+                byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePassword(authDto.Password, out passwordHash, out passwordSalt);
 
             User user = new User();
@@ -37,7 +47,7 @@ namespace Business.Concrete
             user.Name = authDto.Name;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            user.ImageUrl = authDto.ImageUrl;
+            user.ImageUrl = fileName;
 
             _userDal.Add(user);
             return new SuccessResult();

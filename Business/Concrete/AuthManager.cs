@@ -59,9 +59,7 @@ namespace Business.Concrete
                 IResult result = BusinessRules.Run(
                      CheckIfEmailExists(authDto.Email),
                     resimTurDogrulama(authDto.Image.FileName),
-                      resimBirMbKucukmu(authDto.Image.Length)
-
-                    );
+                      resimBirMbKucukmu(authDto.Image.Length));
 
                 if (!result.Success)
                 {
