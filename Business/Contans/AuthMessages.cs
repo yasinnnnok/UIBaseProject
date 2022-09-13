@@ -13,6 +13,7 @@ namespace Business.Contans
         public static string WrongNotMail = "Bu mail adresi daha önce kullanılmış.";
         public static string WrongPassword = "Şifreniz yanlış.";
         public static string WrongImageSize = "Resim boyutu 1 Mb'dan az olmalı.";
+        public static string WrongImageType = "Resim jpg,jepg,gif,png türlerinden olmalı.";
 
 
     }

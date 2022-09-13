@@ -26,7 +26,8 @@ namespace Business.Concrete
 
 
         public IResult Add(AuthDto authDto)
-        {
+        {          
+
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePassword(authDto.Password, out passwordHash, out passwordSalt);
 

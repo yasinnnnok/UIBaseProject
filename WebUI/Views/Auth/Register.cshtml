@@ -14,7 +14,7 @@
             <div class="card-header">
                 <h4 class="card-title">Kullanıcı Ekleme</h4>
             </div>
-            <form asp-action="Register" asp-controller="Auth" method="post" class="login100-form validate-form">
+            <form asp-action="Register" asp-controller="Auth" method="post" class="login100-form validate-form" enctype="multipart/form-data">
                 <div class="table-responsive">
                     <table class="table table-borderless">
                         <tbody>
@@ -40,6 +40,14 @@
                                 <td>
                                     <input class="input100" type="text" asp-for="ImageUrl">
                                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Resim</td>
+                                <td>
+                                    <input class="input100" type="file" asp-for="Image">
+                                    <span asp-validation-for="Image" class="text-danger"></span>
                                 </td>
 
                             </tr>

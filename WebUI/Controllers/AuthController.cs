@@ -22,7 +22,7 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(AuthDto authDto)
+        public IActionResult Register([FromForm]AuthDto authDto)
         {
 
             var result= _authService.Register(authDto);

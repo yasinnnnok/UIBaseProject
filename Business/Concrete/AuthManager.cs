@@ -52,12 +52,15 @@ namespace Business.Concrete
 
             AuthValidator validationRules = new AuthValidator();
             ValidationResult validationResult = validationRules.Validate(authDto);
+             
 
             if (validationResult.IsValid)
             {
                 IResult result = BusinessRules.Run(
                      CheckIfEmailExists(authDto.Email),
+                    resimTurDogrulama(authDto.Image.FileName),
                       esimBirMbKucukmu(imgSize)
+
                     );
 
                 if (!result.Success)
@@ -90,6 +93,22 @@ namespace Business.Concrete
             }
             //Küçükse true
             return new SuccessResult();
+        }
+
+        private IResult resimTurDogrulama(string fileName)
+        {
+  
+            var ext = fileName.Substring(fileName.LastIndexOf('.'));
+            var extension = ext.ToLower();
+
+            List<string> AllowFileExtension = new List<string> { ".jpg", ".jepg", ".gif", ".png" };
+
+            if (!AllowFileExtension.Contains(extension))
+            {
+                return new ErrorResult(AuthMessages.WrongImageType);
+            }
+            return new SuccessResult();
+
         }
 
 
