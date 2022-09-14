@@ -16,6 +16,8 @@ namespace Business.Abstract
         void Delete(UserOperationClaim userOperationClaim);
         IResult Update(UserDto userDto);
         IResult GetByUserOperationClaim(User user, OperationClaim operationClaim);
+        IResult GetByUser(User user);
+        IResult GetByOperationClaim(OperationClaim operationClaim);
 
 
         List<UserDto> GetList();

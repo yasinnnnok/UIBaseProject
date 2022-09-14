@@ -14,5 +14,6 @@ namespace Business.Contans
         public static string AddMessages = "Ekleme işlemi başarılı";
         public static string UpdatedUser = "Kullanıcı başarı ile güncellendi";
         public static string DeletedUser = "Kullanıcınız başarı ile silindi";
+        public static string WrongDeletedUser = "Bu kullanıcıya ait tanımlanmış yetkiler var.";
     }
 }

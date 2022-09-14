@@ -25,9 +25,15 @@ namespace WebUI.Controllers
 
         public IActionResult Delete(int id)
         {
-            var user= _userService.GetById(id).Data;
-            _userService.Delete(user);
-            return RedirectToAction("Index", "User");
+            var user = _userService.GetById(id).Data;
+            var result = _userService.Delete(user);
+
+            if (result.Success)
+            {
+                return RedirectToAction("Index", "User");
+            }
+            TempData["Hata"] = result.Message;
+            return RedirectToAction("Index", "User", TempData["Hata"]);
         }
 
         [HttpGet]

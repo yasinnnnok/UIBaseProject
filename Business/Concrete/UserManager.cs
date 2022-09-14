@@ -18,13 +18,15 @@ namespace Business.Concrete
     {
         //servisten implemente ettik ama Data Acces e bağlanıyoruz.
         private readonly IUserDal _userDal;
+        private readonly IUserOperationClaimService _userOperationClaimService;
         private readonly IFileService _fileService;
 
         //consructor ile ürettik
-        public UserManager(IUserDal userDal,IFileService fileService)
+        public UserManager(IUserDal userDal,IFileService fileService, IUserOperationClaimService userOperationClaimService)
         {
             _userDal = userDal;
             _fileService = fileService;
+            _userOperationClaimService = userOperationClaimService;
         }
 
 
@@ -76,8 +78,15 @@ namespace Business.Concrete
 
         public IResult Delete(User user)
         {
-            _userDal.Delete(user);
-            return new SuccessResult(UserMessages.DeletedUser);
+            var result = _userOperationClaimService.GetByUser(user);
+            if (result.Success)
+            {
+                _userDal.Delete(user);
+                return new SuccessResult(UserMessages.DeletedUser);
+
+            }
+            return new ErrorResult(UserMessages.WrongDeletedUser);
+
         }
 
 

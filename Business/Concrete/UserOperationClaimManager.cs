@@ -70,6 +70,27 @@ namespace Business.Concrete
             return result;
         }
 
+        public IResult GetByOperationClaim(OperationClaim operationClaim)
+        {
+            var result = _userOperationDal.Get(p => p.OperationClaimId == operationClaim.Id);
+            if (result != null)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
+
+        public IResult GetByUser(User user)
+        {
+            var result = _userOperationDal.Get(p => p.UserId == user.Id);
+            if (result!=null)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+
+        }
+
         public IResult GetByUserOperationClaim(User user, OperationClaim operationClaim)
         {
 

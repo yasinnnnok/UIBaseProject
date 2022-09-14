@@ -34,18 +34,19 @@
                             <td>@item.Email</td>
                            <td><img src="@item.ImageUrl" width="50px" height="50px"/></td>       
                                         
-                          
-                          
-
                             <td>
                                 <a href="/User/Update/@item.Id" class="btn btn-warning">Düzenle</a>
                                 <a href="/User/Delete/@item.Id" class="btn btn-danger">Sil</a>
                                 
                             </td>
+                           
 
                         </tr>
                     }
                 </tbody>
+                 
+                                @TempData["Hata"]
+                 
             </table>
         </div>
     </div>

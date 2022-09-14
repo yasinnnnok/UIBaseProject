@@ -24,7 +24,6 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Register([FromForm]AuthDto authDto)
         {
-
             var result= _authService.Register(authDto);
             if (result.Success)
             {
