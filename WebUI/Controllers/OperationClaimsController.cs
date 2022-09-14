@@ -41,9 +41,17 @@ namespace WebUI.Controllers
 
         public IActionResult Delete(int id)
         {
+
             var operationClaim = _operationClaimService.GetById(id);
-            _operationClaimService.Delete(operationClaim);
-            return RedirectToAction("Index", "OperationClaims");
+            var result = _operationClaimService.Delete(operationClaim);
+
+            if (result.Success)
+            {
+                return RedirectToAction("Index", "OperationClaims");
+            }
+            TempData["RolSilHata"] = result.Message;
+            return RedirectToAction("Index", "OperationClaims", TempData["Hata"]);
+
         }
         [HttpGet]
         public IActionResult Update(int id)

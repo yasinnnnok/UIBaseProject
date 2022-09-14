@@ -11,7 +11,7 @@ namespace Business.Abstract
     public interface IOperationClaimService
     {
         IResult Add(OperationClaim operationClaim);
-        void Delete(OperationClaim operationClaim);
+        IResult Delete(OperationClaim operationClaim);
         void Update(OperationClaim operationClaim);
 
         bool GetByOperationClaim(string operationClaim);

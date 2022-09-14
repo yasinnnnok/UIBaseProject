@@ -16,13 +16,14 @@ namespace Business.Concrete
     public class OperationClaimManager : IOperationClaimService
     {
         private readonly IOperationClaimDal _operationClaimDal;
-    
+        private readonly IUserOperationClaimService _userOperationClaimService;
+
 
         //interface i new lemek lazım kullanmak için. Bunu Consructor ile yapıyoruz.
-        public OperationClaimManager(IOperationClaimDal operationClaimDal)
+        public OperationClaimManager(IOperationClaimDal operationClaimDal, IUserOperationClaimService userOperationClaimService)
         {
             _operationClaimDal = operationClaimDal;
-          
+            _userOperationClaimService = userOperationClaimService;
         }
 
         public IResult Add(OperationClaim operationClaim)
@@ -45,9 +46,20 @@ namespace Business.Concrete
             return new ErrorResult();
         }
 
-        public void Delete(OperationClaim operationClaim)
+        public IResult Delete(OperationClaim operationClaim)
         {
-            _operationClaimDal.Delete(operationClaim);
+
+            
+
+            var result = _userOperationClaimService.GetByOperationClaim(operationClaim);
+            if (result.Success)
+            {
+                _operationClaimDal.Delete(operationClaim);
+                return new SuccessResult("Başarı ile silindi.");
+
+            }
+            return new ErrorResult("Bu rol kullanıcılara tanımlanmıştır. SİLİNEMEZ.");
+
         }
 
         public OperationClaim GetById(int id)
