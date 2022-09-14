@@ -30,7 +30,8 @@ namespace Business.Concrete
 
         public IResult Add(AuthDto authDto)
         {
-           string fileName = _fileService.FileSave(authDto.Image,"./Content/img/");
+           string fileName = _fileService.FileSave(authDto.Image,"wwwroot/image/");
+            fileName = "/image/" + fileName;
            var user = CreateUser(authDto,fileName);
            
             _userDal.Add(user);
