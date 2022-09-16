@@ -26,7 +26,7 @@ namespace Core.Utilities.Security.JWT
         {
             Token token = new Token();
             //Sucurity Key'in simetriğini alalım.
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:SecurityKey"]));
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mysecuritkeymysecuritkey1002"));
 
             //Şifrelenmiş kimliği oluşturuyoruz.
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -34,10 +34,10 @@ namespace Core.Utilities.Security.JWT
             //Token Ayarları
             token.Expiration = DateTime.Now.AddMinutes(60);
             JwtSecurityToken securityToken = new JwtSecurityToken(
-                issuer: Configuration["Token:Issuer"],
-                audience: Configuration["Token:Audience"],
+               issuer: "http://localhost",
+                audience: "http://localhost",
                 expires: token.Expiration,
-                claims:SetClaims(user,operationClaims),
+                claims: SetClaims(user, operationClaims),
                 notBefore: DateTime.Now,
                 signingCredentials: signingCredentials);
 
@@ -68,6 +68,7 @@ namespace Core.Utilities.Security.JWT
         {
             var claims = new List<Claim>();
             claims.AddName(user.Name);
+            claims.AddRoles(operationClaims.Select(p => p.Name).ToArray());
             return claims;
         }
 

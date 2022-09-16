@@ -3,6 +3,7 @@ using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
 using Entities.Dtos;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -15,6 +16,7 @@ namespace WebUI.Controllers
             _authService = authService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Register()
         {
