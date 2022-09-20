@@ -14,6 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Business;
+using System.Security.Claims;
+
 namespace Business.Concrete
 {
     public class AuthManager : IAuthService
@@ -38,6 +40,7 @@ namespace Business.Concrete
                 {
                     Token token = new Token();
                     token = _tokenHandler.CreateToken(user, operationClaims);
+
                     return new SuccessDataResult<Token>(token);
                 }
                 return new ErrorDataResult<Token>(AuthMessages.WrongPassword);
@@ -48,7 +51,7 @@ namespace Business.Concrete
         //message  string
         public IResult Register(AuthDto authDto)
         {
-            int imgSize = 1;
+       
 
             AuthValidator validationRules = new AuthValidator();
             ValidationResult validationResult = validationRules.Validate(authDto);

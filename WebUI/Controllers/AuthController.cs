@@ -3,11 +3,15 @@ using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
 using Entities.Dtos;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebUI.Controllers
 {
+
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
@@ -16,7 +20,10 @@ namespace WebUI.Controllers
             _authService = authService;
         }
 
-        [Authorize]
+
+        //[Authorize(Roles = "Admin")]
+        //  [Authorize]
+       
         [HttpGet]
         public IActionResult Register()
         {
@@ -24,9 +31,9 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register([FromForm]AuthDto authDto)
+        public IActionResult Register([FromForm] AuthDto authDto)
         {
-            var result= _authService.Register(authDto);
+            var result = _authService.Register(authDto);
             if (result.Success)
             {
                 return RedirectToAction("Index", "Home");
@@ -48,10 +55,14 @@ namespace WebUI.Controllers
             var result = _authService.Login(loginAuthDto);
             if (result.Success)
             {
+                HttpContext.Session.SetString("Token", result.Data.AccessToken);
                 return RedirectToAction("Index", "Home");
             }
             TempData["LoginHata"] = result.Message;
             return View();
         }
+
+
+
     }
 }

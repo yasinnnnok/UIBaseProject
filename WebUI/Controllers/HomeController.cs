@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebUI.Models;
 
@@ -13,6 +14,9 @@ namespace WebUI.Controllers
             _logger = logger;
         }
 
+        //[Authorize(Roles = "admin,developer")]
+   
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

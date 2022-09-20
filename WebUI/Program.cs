@@ -12,12 +12,16 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
 builder.Services.AddControllersWithViews()
     .AddFluentValidation(configration => configration.RegisterValidatorsFromAssemblyContaining<AuthValidator>());
- 
+
 //Autofac ile DependencyInjection ekleme
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-builder.Host.ConfigureContainer<ContainerBuilder>(builder=>builder.RegisterModule(new AutofacBusinessModule()));
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacBusinessModule()));
+
+
+builder.Services.AddHttpClient();
 
 //JWT
 //ValidateAudience- hangi sitelerin kontrol etmesi
@@ -25,23 +29,36 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder=>builder.RegisterModul
 //ValidateLifetime-belli sonra süre bitsin. bitme süresi olsunmu. 
 //ValidateIssuerSigningKey - üreteceðk token deðerinin uygulamamýza ait old. doðrulamasýdýr.
 //ClockSkew->server ile saat farký olursa
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    //?
-    options.RequireHttpsMetadata = false;
+
+//.AddCookie(opt =>
+//{
+//    opt.LoginPath = "/Auth/login";
+//    opt.LogoutPath = "/Auth/Logout";
+//    opt.AccessDeniedPath = "/Auth/AccessDenied";
+//    opt.Cookie.SameSite = SameSiteMode.Strict;
+//    opt.Cookie.HttpOnly = true;
+//    opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+//    opt.Cookie.Name = "JwtCookie";
+//})
+builder.Services.AddSession();
+builder.Services.AddMvc();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
+.AddJwtBearer(options =>
+    {
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateAudience = true,
         ValidateIssuer = true,
-        ValidateLifetime = false,
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = "http://localhost",
-        ValidAudience = "http://localhost",
+        ValidIssuer = "https://localhost:7043",
+        ValidAudience = "https://localhost:7043",
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mysecuritkeymysecuritkey1002")),
         ClockSkew = TimeSpan.Zero
 
     };
-
 
 });
 
@@ -57,6 +74,22 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//
+app.UseSession();
+
+app.Use(async (context, next) =>
+{
+    var token = context.Session.GetString("Token");
+    if (!string.IsNullOrEmpty(token))
+    {
+        context.Request.Headers.Add("Authorization", "Bearer " + token);
+    }
+    await next();
+});
+
+//();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -64,8 +97,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=Login}/{id?}");
 
+
+
+
 app.Run();
+
+
+

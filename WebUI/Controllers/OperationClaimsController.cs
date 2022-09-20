@@ -2,10 +2,12 @@
 using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
+   
     public class OperationClaimsController : Controller
     {
         private readonly IOperationClaimService _operationClaimService;
@@ -13,6 +15,11 @@ namespace WebUI.Controllers
         {
             _operationClaimService = operationClaimService;
         }
+        
+        
+        [Authorize(Roles = "Admin,Taşınırcı")]
+        //[Authorize()]   
+        [HttpGet]
         public IActionResult Index()
         {
             var values = _operationClaimService.GetList();

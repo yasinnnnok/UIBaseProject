@@ -4,6 +4,7 @@ using Core.Utilities.Result.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -21,7 +22,10 @@ namespace WebUI.Controllers
             _operationClaimService = operationClaimService;
         }
 
-
+        //[AllowAnonymous]
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+   
         public IActionResult Index()
         {
             var values = _userOperationClaimService.GetList();
@@ -29,7 +33,10 @@ namespace WebUI.Controllers
             return View(values);
         }
 
+        
+       // [Authorize(Roles = "Admin")]
         [HttpGet]
+
         public IActionResult Add()
         {
            var userList = _userService.GetList().Data.ToList();
@@ -54,6 +61,7 @@ namespace WebUI.Controllers
 
         }
 
+
         public IActionResult Delete(int id)
         {
             var operationClaim = _userOperationClaimService.GetById(id);
@@ -61,7 +69,11 @@ namespace WebUI.Controllers
             return RedirectToAction("Index", "UserOperationClaim");
         }
 
+
+
+
         [HttpGet]
+
         public IActionResult Update(int id)
         {
             var result = _userOperationClaimService.GetById(id);
