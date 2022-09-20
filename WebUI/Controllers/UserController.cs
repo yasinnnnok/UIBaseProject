@@ -3,10 +3,12 @@ using Business.ValidationRules.FluentValidation;
 using Entities.Concrete;
 using Entities.Dtos;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

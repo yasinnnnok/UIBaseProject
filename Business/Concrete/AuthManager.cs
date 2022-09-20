@@ -47,15 +47,16 @@ namespace Business.Concrete
             }
             return new ErrorDataResult<Token>(AuthMessages.WrongNotMail);
         }
+
         //succcess : true  false
         //message  string
         public IResult Register(AuthDto authDto)
         {
-       
+
 
             AuthValidator validationRules = new AuthValidator();
             ValidationResult validationResult = validationRules.Validate(authDto);
-             
+
 
             if (validationResult.IsValid)
             {
@@ -101,7 +102,7 @@ namespace Business.Concrete
 
         private IResult resimTurDogrulama(string fileName)
         {
-  
+
             var ext = fileName.Substring(fileName.LastIndexOf('.'));
             var extension = ext.ToLower();
 

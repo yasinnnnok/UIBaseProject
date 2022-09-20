@@ -21,9 +21,7 @@ namespace WebUI.Controllers
         }
 
 
-        //[Authorize(Roles = "Admin")]
-        //  [Authorize]
-       
+        [Authorize(Roles = "Admin")]               
         [HttpGet]
         public IActionResult Register()
         {
@@ -43,7 +41,7 @@ namespace WebUI.Controllers
             return View(authDto);
         }
 
-
+        
         public IActionResult Login()
         {
             return View();
@@ -56,11 +54,26 @@ namespace WebUI.Controllers
             if (result.Success)
             {
                 HttpContext.Session.SetString("Token", result.Data.AccessToken);
+                
+
+
                 return RedirectToAction("Index", "Home");
             }
             TempData["LoginHata"] = result.Message;
             return View();
         }
+
+
+
+        
+        
+        public IActionResult Logout()
+        {
+            // HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Auth");
+        }
+
 
 
 

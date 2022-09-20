@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserOperationClaimController : Controller
     {
         private readonly IUserOperationClaimService _userOperationClaimService;

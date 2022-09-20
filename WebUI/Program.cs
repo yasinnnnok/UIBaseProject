@@ -8,6 +8,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews()
     .AddFluentValidation(configration => configration.RegisterValidatorsFromAssemblyContaining<AuthValidator>());
+
+
 
 //Autofac ile DependencyInjection ekleme
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -30,21 +33,25 @@ builder.Services.AddHttpClient();
 //ValidateIssuerSigningKey - üreteceðk token deðerinin uygulamamýza ait old. doðrulamasýdýr.
 //ClockSkew->server ile saat farký olursa
 
-//.AddCookie(opt =>
-//{
-//    opt.LoginPath = "/Auth/login";
-//    opt.LogoutPath = "/Auth/Logout";
-//    opt.AccessDeniedPath = "/Auth/AccessDenied";
-//    opt.Cookie.SameSite = SameSiteMode.Strict;
-//    opt.Cookie.HttpOnly = true;
-//    opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-//    opt.Cookie.Name = "JwtCookie";
-//})
-builder.Services.AddSession();
+
+builder.Services.AddSession(option=>
+{
+    option.IdleTimeout = TimeSpan.FromMinutes(1);
+});
 builder.Services.AddMvc();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-
+.AddCookie(opt =>
+{
+    opt.Cookie.Name = "NetCoreMvc.Auth";
+    opt.LoginPath = "/Auth/login";
+    opt.LogoutPath = "/Auth/Logout";
+    opt.AccessDeniedPath = "/Auth/Login";
+   // opt.Cookie.SameSite = SameSiteMode.Strict;
+    //opt.Cookie.HttpOnly = true;
+   // opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    
+})
 .AddJwtBearer(options =>
     {
     options.TokenValidationParameters = new TokenValidationParameters
