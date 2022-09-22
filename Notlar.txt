@@ -1,15 +1,12 @@
 
 
 YAPILACAKLAR----------------------------------------------------------------------------------
-
-1)Logot iþlemi (token bazlý)
-1)resim silme
-2) Yetkilendirme gerekli. Þuan JWT ile çalýþmýyor. Authorize çalýþmýyor.
+1) Resim silme
+2)Loglama
 3) ASpectler yazýlmalý
 
 
 YAPILANLAR-------------------------------------------------------------------------------------
-
 !) SÝLME ÝÞLEMLERÝNDE SÝLÝNEN KAYIT DÝÐER KAYITLARDA KULLANILIYORMU ? çok önemli yoksa hata verir.
 1) REsim yükleme gösterme
 1) ValidatonTool yazýldý. AuthManagerda kullanýlýyor.

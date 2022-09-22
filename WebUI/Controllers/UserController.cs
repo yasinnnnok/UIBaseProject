@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize()]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -18,6 +18,7 @@ namespace WebUI.Controllers
             _userService = userService;
         }
 
+        
         public IActionResult Index()
         {
             var values = _userService.GetList().Data;

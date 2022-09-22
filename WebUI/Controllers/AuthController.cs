@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace WebUI.Controllers
 {
-
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
@@ -20,8 +20,7 @@ namespace WebUI.Controllers
             _authService = authService;
         }
 
-
-        [Authorize(Roles = "Admin")]               
+        [Authorize()]
         [HttpGet]
         public IActionResult Register()
         {
@@ -29,9 +28,9 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register([FromForm] AuthDto authDto)
+        public IActionResult Register([FromForm]AuthDto authDto)
         {
-            var result = _authService.Register(authDto);
+            var result= _authService.Register(authDto);
             if (result.Success)
             {
                 return RedirectToAction("Index", "Home");
@@ -41,7 +40,7 @@ namespace WebUI.Controllers
             return View(authDto);
         }
 
-        
+
         public IActionResult Login()
         {
             return View();
@@ -53,9 +52,13 @@ namespace WebUI.Controllers
             var result = _authService.Login(loginAuthDto);
             if (result.Success)
             {
-                HttpContext.Session.SetString("Token", result.Data.AccessToken);
-                
+                JwtSecurityTokenHandler handler =new JwtSecurityTokenHandler();
+                var token = handler.ReadJwtToken(result.Data.AccessToken);
 
+                ClaimsIdentity identity = new ClaimsIdentity(token.Claims,CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProps = new AuthenticationProperties();
+
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), authProps);
 
                 return RedirectToAction("Index", "Home");
             }
@@ -63,19 +66,11 @@ namespace WebUI.Controllers
             return View();
         }
 
-
-
-        
-        
+      
         public IActionResult Logout()
         {
-            // HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear();
-            return RedirectToAction("Login", "Auth");
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
         }
-
-
-
-
     }
 }

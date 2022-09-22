@@ -19,7 +19,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(x => x.ImageUrl).NotEmpty().WithMessage("ImageURl boş geçme!");
             RuleFor(x => x.Image).NotNull().WithMessage("Bir resim seçiniz!");
             RuleFor(x => x.Password).NotEmpty().WithMessage("Şifre boş geçemez!");
-           // RuleFor(x => x.Password).MinimumLength(6).WithMessage("Şifreniz en az 6 karakter olmalıdır.");
+            //RuleFor(x => x.Password).MinimumLength(6).WithMessage("Şifreniz en az 6 karakter olmalıdır.");
             //RuleFor(x => x.Password).Matches("[A-Z]").WithMessage("Şifreniz e az 1 adet büyük harf içermelidir.");
             //RuleFor(x => x.Password).Matches("[a-z]").WithMessage("Şifreniz en az 1 adet küçük harf içermelidir.");
             //RuleFor(x => x.Password).Matches("[0-9]").WithMessage("Şifreniz en az 1 adet sayı içermelidir.");

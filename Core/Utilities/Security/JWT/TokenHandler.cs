@@ -34,8 +34,8 @@ namespace Core.Utilities.Security.JWT
             //Token Ayarları
             token.Expiration = DateTime.Now.AddMinutes(60);
             JwtSecurityToken securityToken = new JwtSecurityToken(
-                issuer: "https://localhost:7043",
-                audience: "https://localhost:7043",
+               issuer: "http://localhost",
+                audience: "http://localhost",
                 expires: token.Expiration,
                 claims: SetClaims(user, operationClaims),
                 notBefore: DateTime.Now,

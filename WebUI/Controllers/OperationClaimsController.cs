@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize()]
     public class OperationClaimsController : Controller
     {
         private readonly IOperationClaimService _operationClaimService;
@@ -15,11 +15,7 @@ namespace WebUI.Controllers
         {
             _operationClaimService = operationClaimService;
         }
-        
-        
-       
-     
-        [HttpGet]
+
         public IActionResult Index()
         {
             var values = _operationClaimService.GetList();
